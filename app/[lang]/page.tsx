@@ -31,7 +31,7 @@ export default async function Home({
     const footer = dict.footer || {};
     const contact = dict?.about?.contact || {};
     const topCreators = dict.home?.topCreators || {};
-    const featureCards = dict.home.featureCards || {};
+    const featureCards = dict.home?.featureCards || {};
     const partners = dict.home?.partners || {};
 
     const { influencers, error } = await getInfluencers(1, 8, "APPROVED");

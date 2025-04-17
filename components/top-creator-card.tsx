@@ -3,7 +3,6 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { Eye, Play } from "lucide-react";
 import { platformIcons } from "./platform-icons";
 import { Creator } from "./creator-card";
 export function CreatorCard({ creator }: { creator: Creator }) {
@@ -11,7 +10,7 @@ export function CreatorCard({ creator }: { creator: Creator }) {
         <motion.div
             variants={{
                 hidden: { opacity: 0, y: 20 },
-                show: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+                show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
             }}
             whileHover={{ scale: 1.03 }}
             transition={{ duration: 0.3 }}

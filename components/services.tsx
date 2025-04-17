@@ -39,6 +39,7 @@ export function Services({ dict, isAdmin = false }: { dict: any; isAdmin?: boole
       <div className="container px-4 md:px-6">
         <div className="flex flex-col items-center justify-center space-y-4 text-center">
           <EditableSection
+          jsonPath="dict.home.services"
             id="services-header"
             type="mixed"
             isAdmin={isAdmin}
@@ -67,6 +68,7 @@ export function Services({ dict, isAdmin = false }: { dict: any; isAdmin?: boole
               <motion.div key={index} variants={item} whileHover={{ scale: 1.02 }} transition={{ duration: 0.3 }}>
                 <div className="service-card-container border">
                   <EditableSection
+                  jsonPath={` dict.home.services.items.${index} `}
                     id={`service-item-${index}`}
                     type="mixed"
                     isAdmin={isAdmin}
