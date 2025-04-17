@@ -1,0 +1,349 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 6%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 6%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 258, 80%, 66%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 25 100% 50%;
+    --radius: 0.5rem;
+    --chart-1: 100 100% 40%;
+    --chart-2: 262 83.3% 57.8%;
+    --chart-3: 316 70% 50%;
+    --chart-4: 175 84.6% 39.2%;
+
+    /* Brand color variables */
+    --brand: 258, 80%, 66%;
+    --brand-light: 258, 100%, 60%;
+    --brand-dark: 258, 100%, 45%;
+    --brand-foreground: 0 0% 98%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    @apply font-sans antialiased;
+    @apply dark:text-slate-100;
+  }
+}
+
+.bg-grid-white\/\[0\.02\] {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='rgb(255 255 255 / 0.02)'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e");
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* RTL Support */
+[dir="rtl"] .rtl\:space-x-reverse {
+  --tw-space-x-reverse: 1;
+}
+
+/* Enhanced Service Card Hover Effects */
+.service-card-container {
+  position: relative;
+  border-radius: 0.5rem;
+  transition: all 0.5s ease;
+  will-change: transform, box-shadow;
+}
+
+.service-card-container::before,
+.service-card-container::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 0.5rem;
+  padding: 2px;
+  background: linear-gradient(135deg,
+      hsl(var(--brand) / 0) 0%,
+      hsl(var(--brand) / 0) 25%,
+      hsl(var(--brand) / 0.7) 50%,
+      hsl(var(--brand) / 0) 75%,
+      hsl(var(--brand) / 0) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: all 0.5s ease;
+  background-size: 400% 400%;
+  background-position: 0% 0%;
+}
+
+.service-card-container::after {
+  background: linear-gradient(-45deg,
+      hsl(var(--brand) / 0) 0%,
+      hsl(var(--brand) / 0) 25%,
+      hsl(var(--brand) / 0.7) 50%,
+      hsl(var(--brand) / 0) 75%,
+      hsl(var(--brand) / 0) 100%);
+  background-size: 400% 400%;
+  background-position: 0% 0%;
+}
+
+.service-card-container:hover {
+  box-shadow: 0 0 20px hsl(var(--brand) / 0.2), 0 0 30px hsl(var(--brand) / 0.1), 0 0 40px hsl(var(--brand) / 0.05);
+}
+
+.service-card-container:hover::before {
+  opacity: 1;
+  animation: gradient-animation 3s ease;
+}
+
+.service-card-container:hover::after {
+  opacity: 1;
+  animation: gradient-animation-reverse 3s ease;
+}
+
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 0%;
+  }
+
+  50% {
+    background-position: 100% 100%;
+  }
+
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
+@keyframes gradient-animation-reverse {
+  0% {
+    background-position: 100% 100%;
+  }
+
+  50% {
+    background-position: 0% 0%;
+  }
+
+  100% {
+    background-position: 100% 100%;
+  }
+}
+
+/* Smooth Transition Enhancements */
+* {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.smooth-transition {
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Prevent text selection */
+.no-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Button hover effect with ripple from mouse position */
+.button-hover {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.button-hover::before {
+  content: "";
+  position: absolute;
+  top: var(--y, 50%);
+  left: var(--x, 50%);
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: white;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: width 0.5s, height 0.5s, opacity 0.5s;
+  z-index: -1;
+}
+
+.button-hover:hover {
+  color: hsl(var(--brand)) !important;
+  transition: color 0.5s;
+}
+
+.button-hover:hover::before {
+  width: 300%;
+  height: 300%;
+  opacity: 1;
+}
+
+/* Navbar text mask effect */
+header a,
+header button {
+  position: relative;
+  z-index: 1;
+}
+
+/* Form elements - hide cursor */
+input,
+textarea,
+select,
+.form-element {
+  cursor: text !important;
+}
+
+/* Hide scrollbar for carousel */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Infinite marquee animations */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-reverse {
+  0% {
+    transform: translateX(-50%);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+  min-width: 200%;
+}
+
+.animate-marquee-reverse {
+  animation: marquee-reverse 30s linear infinite;
+  min-width: 200%;
+}
+
+/* About page animations */
+.fade-in-up {
+  animation: fadeInUp 1s ease forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.staggered-fade-in>* {
+  opacity: 0;
+  animation: fadeIn 0.5s ease forwards;
+}
+
+.staggered-fade-in>*:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.staggered-fade-in>*:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.staggered-fade-in>*:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.staggered-fade-in>*:nth-child(4) {
+  animation-delay: 0.4s;
+}
+
+.staggered-fade-in>*:nth-child(5) {
+  animation-delay: 0.5s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* Table styles */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 0.5rem;
+  padding: 16px !important;
+}
+
+caption {
+  margin: 1rem 0;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+caption {
+  text-align: left;
+}
+
+
+th,
+td {
+  padding: 0.5rem;
+  text-align: left;
+  padding: 6px 12px !important;
+
+  border-bottom: 1px solid hsl(var(--muted-foreground) / 0.5);
+}
+
+th {
+  font-weight: bold;
+}
+
+td {
+  font-weight: normal;
+}
+
+*:focus {
+  outline: none;
+
+}
+
+*:focus-visible {
+  outline: none;
+}

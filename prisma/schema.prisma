@@ -1,0 +1,97 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String    @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  email          String    @unique
+  emailVerified  DateTime?
+  password       String
+  phone          String?
+  image          String?
+  role           Role      @default(EDITOR)
+  responsibility String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+model Website {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  url         String   @unique
+  name        String
+  logo        String?
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Influencer {
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  email         String         @unique
+  phone         String?
+  bio           String?
+  image         String?
+  category      String?
+  country       String?
+  gender        String?
+  dateOfBirth   DateTime?
+  socialLinks   SocialMedia[]
+  followers      String?        
+  status        ApprovalStatus @default(PENDING)
+  approvedBy    String?        @db.ObjectId
+  approvedAt    DateTime?
+  rejectionNote String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+model Brand {
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  email         String         @unique
+  phone         String?
+  website       String?
+  logo          String?
+  industry      String?
+  description   String?
+  country       String?
+  status        ApprovalStatus @default(PENDING)
+  approvedBy    String?        @db.ObjectId
+  approvedAt    DateTime?
+  rejectionNote String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+type SocialLink {
+  platform String
+  url      String
+}
+
+enum Role {
+  OWNER
+  ADMIN
+  EDITOR
+}
+
+enum ApprovalStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+type SocialMedia {
+  platform  String?
+  url       String?
+  followers String?
+}

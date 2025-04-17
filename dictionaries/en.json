@@ -1,0 +1,318 @@
+{
+  "navigation": {
+    "home": "Home",
+    "services": "Services",
+    "contact": "Contact",
+    "creators": "Creators",
+    "about": "About",
+    "register": {
+      "influencer": "Join as Influencer",
+      "brand": "Partner with Us"
+    },
+    "language": "العربية"
+  },
+  "creators": {
+    "title": "Our Creator Network",
+    "subtitle": "Discover and connect with our diverse community of influential creators",
+    "search": "Search creators...",
+    "filter": "Filter by category",
+    "noResults": "No creators found matching your search criteria.",
+    "clearFilters": "Clear filters",
+    "loadMore": "Load more creators",
+    "showing": "Showing {displayed} of {total} creators"
+  },
+  "home": {
+    "hero": {
+      "title": "Connect with Top Influencers",
+      "subtitle": "Elevate your brand with our network of influential creators",
+      "cta": "Get Started"
+    },
+    "services": {
+      "title": "Our Services",
+      "subtitle": "Comprehensive solutions for brands and influencers",
+      "items": [
+        {
+          "title": "Influencer Matching",
+          "description": "Connect with the perfect influencers for your brand"
+        },
+        {
+          "title": "Campaign Management",
+          "description": "End-to-end management of your influencer campaigns"
+        },
+        {
+          "title": "Content Creation",
+          "description": "High-quality content that resonates with your audience"
+        },
+        {
+          "title": "Analytics & Reporting",
+          "description": "Detailed insights and performance metrics"
+        }
+      ]
+    },
+    "topCreators": {
+      "title": "Top Creators",
+      "subtitle": "Connect with our network of influential creators"
+    },
+    "partners": {
+      "title": "Our Partners",
+      "subtitle": "Trusted by leading brands worldwide"
+    },
+    "featureCards": {
+      "title": "Why Choose Us",
+      "subtitle": "Discover the advantages of partnering with our agency",
+      "items": [
+        {
+          "id": 1,
+          "title": "Strategic Partnerships",
+          "content": "Connect your brand with the perfect influencers who align with your values and target audience. Our proprietary matching algorithm ensures authentic partnerships that drive real results.",
+          "image": "https://res.cloudinary.com/ds04j5ge0/image/upload/v1744450337/uploads/video_poster.ad5dd042f80bd76106661a111da1ece9_nftl3k.png?q=auto&f=auto"
+        },
+        {
+          "id": 2,
+          "title": "Data-Driven Campaigns",
+          "content": "Leverage our advanced analytics to optimize your influencer marketing campaigns. Get detailed insights into performance metrics, audience engagement, and ROI to make informed decisions.",
+          "image": "https://res.cloudinary.com/ds04j5ge0/image/upload/v1744333498/uploads/influencer_analysis_tool_e7fl8k.webp?f=auto&q=auto"
+        },
+        {
+          "id": 3,
+          "title": "Creative Content Strategy",
+          "content": "Our team of experts helps develop compelling content strategies that resonate with your target audience. From concept to execution, we ensure your message is delivered effectively.",
+          "image": "https://images.ctfassets.net/nfpsrlop6sws/5ByCsTWjAyWJHns43AfT06/9befc9d6befe10834d4828e4a7cc88a2/manage-influencers-centralize-communication-performance-payouts.png?w=1136&h=960&q=70&fm=webp"
+        }
+      ]
+    },
+    "stats": {
+      "title": "Our Impact",
+      "items": [
+        {
+          "value": "500+",
+          "label": "Influencers"
+        },
+        {
+          "value": "1000+",
+          "label": "Campaigns"
+        },
+        {
+          "value": "300+",
+          "label": "Brands"
+        },
+        {
+          "value": "50M+",
+          "label": "Audience Reach"
+        }
+      ]
+    },
+    "about": {
+      "title": "About Us",
+      "description": "We are a leading influencer marketing agency connecting brands with influential creators. Our mission is to create authentic partnerships that drive real results.",
+      "mission": "Our mission is to revolutionize the way brands connect with audiences through authentic influencer partnerships.",
+      "vision": "We envision a world where every brand can harness the power of influence to create meaningful connections."
+    }
+  },
+  "about": {
+    "title": "About Us",
+    "subtitle": "Learn more about our agency and our mission",
+    "whoWeAre": {
+      "title": "Who Mo Agency Is ?",
+      "content": "We are a leading influencer marketing agency connecting brands with influential creators. Our team of experts works tirelessly to create authentic connections that drive real results.\nOur team of experts works tirelessly to create authentic connections between brands and  influencers, driving meaningful engagement and Measurable results for our clients.\nWith years of experience in the industry, we understand the nuances of influencer marketing  and how to leverage it effectively for brands of  all sizes."
+    },
+    "culture": {
+      "title": "Our Culture & Commitment",
+      "values": [
+        {
+          "title": "Innovation",
+          "description": "We constantly push the boundaries of what's possible in influencer marketing."
+        },
+        {
+          "title": "Authenticity",
+          "description": "We believe in genuine connections between brands and creators."
+        },
+        {
+          "title": "Excellence",
+          "description": "We strive for excellence in everything we do."
+        },
+        {
+          "title": "Diversity",
+          "description": "We celebrate diversity and inclusion in all our partnerships."
+        }
+      ]
+    },
+    "story": {
+      "title": "Our Story",
+      "content": "Founded in 2024, we started with a simple mission: to revolutionize the way brands connect with audiences through authentic influencer partnerships.\nWhat started as a small team with big dreams has grown into a global agency with a network of thousands of influencers across various platforms and niches.\nThroughout our journey, we've remained committed to our core values of authenticity, innovation, and excellence, helping brands and influencers create meaningful connections that drive real results.\n"
+    },
+    "whatWeDo": {
+      "title": "What We Do",
+      "services": [
+        {
+          "title": "Influencer Matching",
+          "description": "We connect brands with the perfect influencers for their campaigns."
+        },
+        {
+          "title": "Campaign Management",
+          "description": "We handle every aspect of your influencer campaigns from start to finish."
+        },
+        {
+          "title": "Content Creation",
+          "description": "We help create compelling content that resonates with your target audience."
+        },
+        {
+          "title": "Analytics & Reporting",
+          "description": "We provide detailed insights and performance metrics for your campaigns."
+        }
+      ]
+    },
+    "contact": {
+      "title": "Let's Talk",
+      "subtitle": "Ready to elevate your brand with influencer marketing ☺️?",
+      "cta": "Contact Us"
+    },
+    "mission": {
+      "title": "Missions",
+      "content": "Our mission is to revolutionize the way brands connect with audiences through authentic influencer partnerships."
+    }
+  },
+  "services": {
+    "title": "Our Services",
+    "subtitle": "Comprehensive solutions tailored to your needs",
+    "items": [
+      {
+        "title": "Influencer Matching",
+        "description": "We connect brands with influencers who align with their values and target audience. Our proprietary matching algorithm ensures the perfect fit for every campaign.",
+        "features": [
+          "Demographic targeting",
+          "Interest-based matching",
+          "Performance history analysis",
+          "Audience authenticity verification"
+        ]
+      },
+      {
+        "title": "Campaign Management",
+        "description": "From concept to execution, we handle every aspect of your influencer campaigns. Our experienced team ensures smooth operation and maximum impact.",
+        "features": [
+          "Campaign strategy development",
+          "Content briefing and approval",
+          "Timeline management",
+          "Performance tracking"
+        ]
+      },
+      {
+        "title": "Content Creation",
+        "description": "Our network of creators produces high-quality, engaging content that resonates with your target audience and drives results.",
+        "features": [
+          "Creative concept development",
+          "Professional production",
+          "Multi-platform optimization",
+          "Brand guideline compliance"
+        ]
+      },
+      {
+        "title": "Analytics & Reporting",
+        "description": "Gain valuable insights into your campaigns with our comprehensive analytics and reporting tools.",
+        "features": [
+          "Real-time performance tracking",
+          "Engagement analysis",
+          "ROI calculation",
+          "Competitive benchmarking"
+        ]
+      }
+    ],
+    "button": "Get Started"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "Get in touch with our team",
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "message": "Message",
+      "submit": "Send Message"
+    },
+    "info": {
+      "address": "123 Influence Street, Digital City",
+      "email": "contact@influenceagency.com",
+      "phone": "+1 (555) 123-4567"
+    }
+  },
+  "faq": {
+    "title": "Frequently Asked Questions"
+  },
+  "register": {
+    "influencer": {
+      "title": "Join Our Influencer Network",
+      "subtitle": "Connect with top brands and grow your influence",
+      "form": {
+        "name": "Full Name",
+        "email": "Email",
+        "phone": "Phone Number",
+        "social": {
+          "title": "Social Media Platforms",
+          "instagram": "Instagram Username",
+          "tiktok": "TikTok Username",
+          "youtube": "YouTube Channel",
+          "other": "Other Platforms"
+        },
+        "category": "Content Category",
+        "audience": "Audience Size",
+        "bio": "Bio",
+        "submit": "Submit Application"
+      }
+    },
+    "brand": {
+      "title": "Partner With Us",
+      "subtitle": "Connect your brand with our network of influencers",
+      "form": {
+        "name": "Company Name",
+        "contact": "Contact Person",
+        "email": "Email",
+        "phone": "Phone Number",
+        "website": "Website",
+        "industry": "Industry",
+        "goals": "Campaign Goals",
+        "budget": "Budget Range",
+        "timeline": "Timeline",
+        "submit": "Submit Inquiry"
+      }
+    }
+  },
+  "footer": {
+    "company": "Mo Agency",
+    "copyright": "© 2023 Mo Agency. All rights reserved.",
+    "links": {
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "faq": "FAQs",
+      "contact": "Contact Us"
+    },
+    "newsletter": {
+      "title": "Subscribe to our newsletter",
+      "placeholder": "Your email",
+      "submit": "Subscribe"
+    },
+    "social": {
+      "follow": "Follow us"
+    }
+  },
+  "undefined": {
+    "title": "Our Servicest",
+    "content": "Comprehensive solutions for brands and influencers"
+  },
+  "": {
+    "services": {
+      "service": {
+        "details": {
+          "items": {
+            "0": {
+              "title": "Influencer Matchings",
+              "content": "We connect brands with influencers who align with their values and target audience. Our proprietary matching algorithm ensures the perfect fit for every campaign."
+            },
+            "1": {
+              "title": "Campaign Management..",
+              "content": "From concept to execution, we handle every aspect of your influencer campaigns. Our experienced team ensures smooth operation and maximum impact."
+            }
+          }
+        }
+      }
+    }
+  }
+}
