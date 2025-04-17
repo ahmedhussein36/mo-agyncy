@@ -3,7 +3,7 @@
 import React from "react";
 import TopCreatorCard from "./top-creator-card";
 import { Creator } from "../creator-card";
-import { useRef, useState, useEffect } from "react";
+import { useRef } from "react";
 import { useInView, motion } from "framer-motion";
 
 const TopCreatorsGrid = ({
@@ -43,15 +43,17 @@ const TopCreatorsGrid = ({
                     </motion.div>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 p-4">
-                    {creators.length !== 0 &&
-                        creators?.map((creator, index: number) => (
-                            <div
-                                key={creator.id}
-                                className={`${IsEvenCard(index)}`}
-                            >
-                                <TopCreatorCard topCreators={creator} index = {index}/>
-                            </div>
-                        ))}
+                    {creators?.map((creator, index: number) => (
+                        <div
+                            key={creator.id}
+                            className={`${IsEvenCard(index)}`}
+                        >
+                            <TopCreatorCard
+                                topCreators={creator}
+                                index={index}
+                            />
+                        </div>
+                    ))}
                 </div>
             </div>
         </section>
