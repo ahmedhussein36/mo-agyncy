@@ -19,14 +19,14 @@ export default async function ContactPage({
     const contact = dict.contact || {};
     const footer = dict.footer || {};
     const about = dict.about || {};
-    const faq = dict.faq || { title: "Frequently Asked Questions" };
+    const faq = dict.faq || {};
 
     return (
         <div className="flex min-h-screen flex-col">
             <Header dict={navigation} />
             <main className="flex-1">
                 <ContactForm dict={contact} isAdmin={isAdmin} />
-                <FaqAccordion dict={faq} isAdmin={isAdmin} />
+                <FaqAccordion dict={faq as any} isAdmin={isAdmin} />
             </main>
             <ContactCTA dict={about.contact} lang={lang} isAdmin={isAdmin} />
             <Footer dict={footer} />

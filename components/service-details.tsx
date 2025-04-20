@@ -71,13 +71,16 @@ export function ServiceDetails({
             <div className="container px-4 md:px-6">
                 <div className="flex flex-col items-center justify-center gap-16 space-y-4 text-center">
                     <EditableSection
-                        jsonPath=".services.service.details.header"
-                        id="service-details-header"
-                        type="mixed"
+                        jsonPath="services.header"
+                        id="service.details.header"
                         isAdmin={isAdmin}
+                        fields={[
+                            { name: "title", type: "text" },
+                            { name: "subtitle", type: "textarea" },
+                        ]}
                         initialData={{
-                            title: dict.title,
-                            content: dict.subtitle,
+                            title: dict.header.title,
+                            subtitle: dict.header.subtitle,
                         }}
                     >
                         <motion.div
@@ -87,20 +90,21 @@ export function ServiceDetails({
                             className="space-y-2"
                         >
                             <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-                                {dict.title}
+                                {dict.header.title}
                             </h1>
                             <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
-                                {dict.subtitle}
+                                {dict.header.subtitle}
                             </p>
                         </motion.div>
                     </EditableSection>
                 </div>
+
                 <motion.div
                     ref={ref}
                     variants={container}
                     initial="hidden"
                     animate={isInView ? "show" : "hidden"}
-                    className="mx-auto mt-12 grid max-w-[1150px]  gap-8"
+                    className="mx-auto mt-12 grid max-w-[1150px] gap-8"
                 >
                     {dict.items.map((service: any, index: number) => {
                         const isImageLeft = index % 2 === 0;
@@ -117,10 +121,10 @@ export function ServiceDetails({
                                 variants={item}
                                 initial="hidden"
                                 animate={cardInView ? "show" : "hidden"}
-                                className="group bg-gradient-to-t from-transparent to-slate-700/80 rounded-lg  p-6 "
+                                className="group bg-gradient-to-t from-transparent to-slate-700/80 rounded-lg p-6"
                             >
                                 <div
-                                    className={` relative flex flex-col items-center gap-6 lg:gap-12 lg:flex-row ${
+                                    className={`relative flex flex-col items-center gap-6 lg:gap-12 lg:flex-row ${
                                         isImageLeft ? "" : "lg:flex-row-reverse"
                                     }`}
                                 >
@@ -149,65 +153,81 @@ export function ServiceDetails({
                                     {/* المحتوى */}
                                     <div className="w-full lg:w-1/2 space-y-4 flex flex-col gap-4">
                                         <EditableSection
-                                            jsonPath={`.services.service.details.items.${index}`}
+                                            jsonPath={`.services.items.${index}`}
                                             id={`service-detail-${index}`}
-                                            type="mixed"
                                             isAdmin={isAdmin}
+                                            fields={[
+                                                { name: "title", type: "text" },
+                                                {
+                                                    name: "description",
+                                                    type: "textarea",
+                                                },
+                                                {
+                                                    name: "features",
+                                                    type: "array",
+                                                    itemFields: [
+                                                        {
+                                                            name: "value",
+                                                            type: "text",
+                                                        },
+                                                    ],
+                                                },
+                                            ]}
                                             initialData={{
                                                 title: service.title,
-                                                content: service.description,
+                                                description:
+                                                    service.description,
+                                                features: service.features.map(
+                                                    (f: {value: string}) => ({
+                                                        value: f.value,
+                                                    })
+                                                ),
                                             }}
                                         >
                                             <h2
-                                                className=" bg-clip-text text-transparent bg-gradient-to-r p-2
-                                            text-xl md:text-3xl lg:text-4xl mb-8 font-bold tracking-tighter from-brand to-slate-50"
+                                                className="bg-clip-text text-transparent bg-gradient-to-r p-2
+                        text-xl md:text-3xl lg:text-4xl mb-8 font-bold tracking-tighter from-brand to-slate-50"
                                             >
                                                 {service.title}
                                             </h2>
                                             <p className="text-muted-foreground">
                                                 {service.description}
                                             </p>
-                                        </EditableSection>
 
-                                        <div className="grid gap-3 sm:grid-cols-2">
-                                            {service.features.map(
-                                                (
-                                                    feature: string,
-                                                    featureIndex: number
-                                                ) => (
-                                                    <div
-                                                        key={featureIndex}
-                                                        className="flex items-center space-x-2 rtl:space-x-reverse"
-                                                    >
-                                                        <Check className="h-5 w-5 text-brand" />
-                                                        <EditableSection
-                                                            jsonPath={`.services.service.details.items.${index}.features.${featureIndex}`}
-                                                            id={`service-feature-${index}-${featureIndex}`}
-                                                            type="content"
-                                                            isAdmin={isAdmin}
-                                                            initialData={{
-                                                                content:
-                                                                    feature,
-                                                            }}
+                                            <div className="grid gap-3 sm:grid-cols-2">
+                                                {service.features.map(
+                                                    (
+                                                        feature: {
+                                                            value: string;
+                                                        },
+                                                        featureIndex: number
+                                                    ) => (
+                                                        <div
+                                                            key={featureIndex}
+                                                            className="flex items-center space-x-2 rtl:space-x-reverse"
                                                         >
+                                                            <Check className="h-5 w-5 text-brand" />
                                                             <span>
-                                                                {feature}
+                                                                {feature.value}
                                                             </span>
-                                                        </EditableSection>
-                                                    </div>
-                                                )
-                                            )}
-                                        </div>
-                                        {/* زر الحجز */}
-                                        <Button variant={"default"} className=" w-fit flex justify-center items-center ">
-                                            <a
-                                                href={"/contact"}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
+                                                        </div>
+                                                    )
+                                                )}
+                                            </div>
+
+                                            <Button
+                                                variant="default"
+                                                className="w-fit flex justify-center items-center my-8"
                                             >
-                                                {dict.button}
-                                            </a>
-                                        </Button>
+                                                <a
+                                                    href="/contact"
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                >
+                                                    {dict.button}
+                                                </a>
+                                            </Button>
+                                        </EditableSection>
                                     </div>
                                 </div>
                             </motion.div>

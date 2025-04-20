@@ -19,7 +19,6 @@ export function ContactCTA({
 }) {
     const ref = useRef<HTMLDivElement>(null);
     const isInView = useInView(ref, { once: true, amount: 0.2 });
-
     return (
         <section
             ref={ref}
@@ -28,12 +27,24 @@ export function ContactCTA({
             <div className="container px-4 md:px-6">
                 <div className="max-w-3xl mx-auto text-center">
                     <EditableSection
-                        id="contact-cta"
-                        type="mixed"
+                        id="about.contact"
+                        jsonPath="about.contact"
                         isAdmin={isAdmin}
+                        fields={[
+                            {
+                                name: "title",
+                                type: "text",
+                                label: "title",
+                            },
+                            {
+                                name: "subtitle",
+                                type: "text",
+                                label: "subtitle",
+                            },
+                        ]}
                         initialData={{
                             title: dict.title,
-                            content: dict.subtitle,
+                            subtitle: dict.subtitle,
                         }}
                     >
                         <motion.div

@@ -33,27 +33,42 @@ export function AboutWhoWeAre({
                         <EditableSection
                             jsonPath="about.whoWeAre"
                             id="about-who-we-are"
-                            type="mixed"
                             isAdmin={isAdmin}
+                            fields={[
+                                { name: "title", type: "text", label: "Title" },
+                                {
+                                    name: "content",
+                                    type: "textarea",
+                                    label: "Content",
+                                },
+                                {
+                                    name: "image",
+                                    type: "text",
+                                    label: "Image URL",
+                                },
+                            ]}
                             initialData={{
                                 title: dict.title,
                                 content: dict.content,
+                                image:
+                                    dict.image ||
+                                    "https://res.cloudinary.com/ds04j5ge0/image/upload/v1744451580/uploads/Strategic-Planning-Blog-Image-1-2_ktyerm.jpg",
                             }}
                         >
                             <h2 className="mb-6 text-3xl font-bold tracking-tighter sm:text-4xl">
                                 {dict.title}
                             </h2>
                             <div className="space-y-4">
-                                {dict.content.split('\n').map(
-                                    (line: string, index: number) => (
+                                {dict.content
+                                    .split("\n")
+                                    .map((line: string, index: number) => (
                                         <p
                                             key={index}
                                             className=" text-muted-foreground md:text-lg"
                                         >
                                             {line}
                                         </p>
-                                    )
-                                )}
+                                    ))}
                             </div>
                         </EditableSection>
                     </motion.div>
@@ -68,19 +83,12 @@ export function AboutWhoWeAre({
                         transition={{ duration: 0.8, delay: 0.2 }}
                         className="relative h-[400px] rounded-lg overflow-hidden"
                     >
-                        <EditableSection
-                            jsonPath="about.whoWeAre.imageUrl"
-                            id="about-who-we-are-image"
-                            type="image"
-                            isAdmin={isAdmin}
-                            initialData={{
-                                imageUrl:
-                                    "https://res.cloudinary.com/ds04j5ge0/image/upload/v1744451580/uploads/Strategic-Planning-Blog-Image-1-2_ktyerm.jpg?q=auto&f=auto",
-                            }}
-                            className="aspect-video"
-                        >
+                        <div className="relative aspect-video">
                             <Image
-                                src="https://res.cloudinary.com/ds04j5ge0/image/upload/v1744451580/uploads/Strategic-Planning-Blog-Image-1-2_ktyerm.jpg?q=auto&f=auto"
+                                src={
+                                    dict.image ||
+                                    "https://res.cloudinary.com/ds04j5ge0/image/upload/v1744451580/uploads/Strategic-Planning-Blog-Image-1-2_ktyerm.jpg"
+                                }
                                 alt="Our team"
                                 fill
                                 className="object-cover"
@@ -90,7 +98,7 @@ export function AboutWhoWeAre({
                                     Our Team
                                 </span>
                             </div>
-                        </EditableSection>
+                        </div>
                     </motion.div>
                 </div>
             </div>

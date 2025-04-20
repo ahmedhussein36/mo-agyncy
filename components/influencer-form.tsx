@@ -171,7 +171,7 @@ export function InfluencerForm({ dict }: { dict: any }) {
                                             <SelectItem key={1} value="male">
                                                 Male
                                             </SelectItem>
-                                            <SelectItem key={1} value="female">
+                                            <SelectItem key={2} value="female">
                                                 Female
                                             </SelectItem>
                                         </SelectContent>

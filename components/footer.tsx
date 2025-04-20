@@ -9,7 +9,6 @@ import HeartComponent from "./developer";
 
 export function Footer({ dict = {} }: { dict: any }) {
     const { lang } = useLanguage();
-    const isRtl = lang === "ar";
 
     return (
         <footer className="bg-black/80 py-12">
@@ -17,39 +16,34 @@ export function Footer({ dict = {} }: { dict: any }) {
                 <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
                     <div className="space-y-4">
                         <h3 className="text-lg font-bold text-brand">
-                            {dict.company || "Mo Agency"}
+                            {"Mo Agency"}
                         </h3>
                         <p className="text-sm text-muted-foreground">
-                            {dict.copyright ||
-                                "© 2025 Mo Agency. All rights reserved."}
+                            "© 2024 Mo Agency. All rights reserved.
                         </p>
                         <div className="flex space-x-4 rtl:space-x-reverse">
                             <Link
                                 href="#"
                                 className="text-muted-foreground hover:text-brand"
                             >
-                                <Facebook className="h-5 w-5" />
                                 <span className="sr-only">Facebook</span>
                             </Link>
                             <Link
                                 href="#"
                                 className="text-muted-foreground hover:text-brand"
                             >
-                                <Twitter className="h-5 w-5" />
                                 <span className="sr-only">Twitter</span>
                             </Link>
                             <Link
                                 href="#"
                                 className="text-muted-foreground hover:text-brand"
                             >
-                                <Instagram className="h-5 w-5" />
                                 <span className="sr-only">Instagram</span>
                             </Link>
                             <Link
                                 href="#"
                                 className="text-muted-foreground hover:text-brand"
                             >
-                                <Youtube className="h-5 w-5" />
                                 <span className="sr-only">YouTube</span>
                             </Link>
                         </div>
@@ -89,25 +83,25 @@ export function Footer({ dict = {} }: { dict: any }) {
                         <h3 className="text-lg font-bold">Links</h3>
                         <nav className="flex flex-col space-y-2">
                             <Link
-                                href="/privacy-policy"
+                                href={"/" + lang + "/privacy-policy"}
                                 className="text-muted-foreground hover:text-brand"
                             >
                                 {dict.links?.privacy || "Privacy Policy"}
                             </Link>
                             <Link
-                                href="/terms"
+                                href={"/" + lang + "/terms"}
                                 className="text-muted-foreground hover:text-brand"
                             >
                                 {dict.links?.terms || "Terms of Service"}
                             </Link>
                             <Link
-                                href="/contact"
+                                href={"/" + lang + "/contact"}
                                 className="text-muted-foreground hover:text-brand"
                             >
                                 {dict.links?.contact || "Contact Us"}
                             </Link>
                             <Link
-                                href="contact/#faqs"
+                                href={"/" + lang + "/contact/#faqs"}
                                 className="text-muted-foreground hover:text-brand"
                             >
                                 {dict.links?.faq || "FAQ"}

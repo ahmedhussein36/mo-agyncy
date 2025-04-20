@@ -58,7 +58,7 @@ export function CreatorCard({
 }) {
     return (
         <motion.div
-            initial={{ opacity: 0, y: 10, scale: 1.05 }}
+            initial={{ opacity: 0, y: 20, scale: 1 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{
                 type: "spring",
@@ -86,12 +86,12 @@ export function CreatorCard({
 
                     {/* Creator details with backdrop blur - positioned at the bottom */}
                     <div className="relative z-10 p-4 backdrop-blur-sm bg-black/80 flex flex-col">
-                        <div className="flex items-center justify-between mb-3">
+                        <div className=" relative w-full flex items-center justify-between mb-3">
                             <h3 className="text-lg font-bold truncate">
                                 {creator.name}
                             </h3>
                             {/* Category badge */}
-                            <div className="absolute top-3 right-3 bg-brand text-white text-xs px-2 py-1 rounded-full z-10">
+                            <div className="absolute top-0 end-3 bg-brand text-white text-xs px-2 py-1 rounded-full z-10">
                                 {creator.category}
                             </div>
                         </div>
@@ -107,10 +107,10 @@ export function CreatorCard({
                                     href={link.url}
                                     target="_blank"
                                     className="flex items-center justify-center text-muted-foreground
-                                    hover:bg-indigo-500/20 rounded-full p-2 
+                                    hover:bg-indigo-500/20 rounded-full p-2 gap-1
                                     hover:text-brand-light transition-colors duration-200"
                                 >
-                                    {platformIcons(link.platform)}
+                                    <span>{platformIcons(link.platform)}</span>
                                     <span className="ml-1">
                                         {link.followers}
                                     </span>

@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { motion, useAnimation } from "framer-motion";
 import Image from "next/image";
 import { WavyBackground } from "@/components/WavyBackground";
+import { EditableSection } from "./admin/editable-section";
 
 export function Hero({
     dict,
@@ -59,48 +60,84 @@ export function Hero({
             >
                 <div className="container relative z-10 px-4 md:px-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-8">
-                        {/* Text content - aligned to start */}
-                        <div className="flex flex-col items-center md:items-start text-left space-y-8">
-                            <motion.div className="space-y-4">
-                                <motion.h1
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ duration: 0.8 }}
-                                    className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl bg-clip-text text-transparent bg-gradient-to-r from-white to-brand"
-                                >
-                                    {dict.title}
-                                </motion.h1>
-                                <motion.p
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ duration: 0.8, delay: 0.2 }}
-                                    className="max-w-[500px] text-slate-100 md:text-xl"
-                                >
-                                    {dict.subtitle}
-                                </motion.p>
-                            </motion.div>
+                        <EditableSection
+                            jsonPath="home.hero"
+                            id="home.hero"
+                            isAdmin={isAdmin}
+                            fields={[
+                                {
+                                    name: "title",
+                                    type: "text",
+                                    label: "Title",
+                                },
+                                {
+                                    name: "subtitle",
+                                    type: "textarea",
+                                    label: "Subtitle",
+                                },
+                                {
+                                    name: "cta",
+                                    type: "text",
+                                    label: "Button lable",
+                                },
+                                {
+                                    name: "image",
+                                    type: "image",
+                                    label: "Image",
+                                },
+                            ]}
+                            initialData={{
+                                title: dict.title,
+                                subtitle: dict.subtitle,
+                                cta: dict.cta,
+                                image: dict.image,
+                            }}
+                        >
+                            {/* Text content - aligned to start */}
+                            <div className="flex flex-col items-center md:items-start text-left space-y-8">
+                                <motion.div className="space-y-4">
+                                    <motion.h1
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ duration: 0.8 }}
+                                        className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl bg-clip-text text-transparent bg-gradient-to-r from-white to-brand"
+                                    >
+                                        {dict.title}
+                                    </motion.h1>
+                                    <motion.p
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{
+                                            duration: 0.8,
+                                            delay: 0.2,
+                                        }}
+                                        className="max-w-[500px] text-slate-100 md:text-xl"
+                                    >
+                                        {dict.subtitle}
+                                    </motion.p>
+                                </motion.div>
 
-                            <motion.div
-                                initial={{ opacity: 0, scale: 0.8 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                transition={{ delay: 0.3, duration: 0.5 }}
-                            >
-                                <Button
-                                    asChild
-                                    size="lg"
-                                    className="bg-brand hover:bg-brand-dark relative overflow-hidden group smooth-transition"
+                                <motion.div
+                                    initial={{ opacity: 0, scale: 0.8 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{ delay: 0.3, duration: 0.5 }}
                                 >
-                                    <Link href={`/${lang}/register/brand`}>
-                                        <span className="relative z-10">
-                                            {dict.cta}
-                                        </span>
-                                        <span className="absolute inset-0 bg-gradient-to-r from-brand-dark to-brand-light opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                                        <span className="absolute -inset-[3px] bg-gradient-to-r from-brand to-brand-light rounded-lg opacity-0 group-hover:opacity-70 blur-md transition-opacity duration-300 group-hover:duration-200"></span>
-                                    </Link>
-                                </Button>
-                            </motion.div>
-                        </div>
-
+                                    <Button
+                                        asChild
+                                        size="lg"
+                                        className="bg-brand hover:bg-brand-dark relative overflow-hidden group smooth-transition"
+                                    >
+                                        <Link href={`/${lang}/register/brand`}>
+                                            <span className="relative z-10">
+                                                {dict.cta}
+                                            </span>
+                                            <span className="absolute inset-0 bg-gradient-to-r from-brand-dark to-brand-light opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                                            <span className="absolute -inset-[3px] bg-gradient-to-r from-brand to-brand-light rounded-lg opacity-0 group-hover:opacity-70 blur-md transition-opacity duration-300 group-hover:duration-200"></span>
+                                        </Link>
+                                    </Button>
+                                </motion.div>
+                            </div>
+                        </EditableSection>
                         {/* Image - aligned to end */}
                         <motion.div
                             className="justify-end items-center hidden md:flex"
@@ -109,7 +146,10 @@ export function Hero({
                             animate={"animate"}
                         >
                             <Image
-                                src="https://res.cloudinary.com/ds04j5ge0/image/upload/v1743953134/uploads/Layer-2_likkmd.png"
+                                src={
+                                    dict.image ||
+                                    "https://res.cloudinary.com/ds04j5ge0/image/upload/v1743953134/uploads/Layer-2_likkmd.png"
+                                }
                                 width={500}
                                 height={500}
                                 alt="Hero illustration"
@@ -119,7 +159,6 @@ export function Hero({
                         </motion.div>
                     </div>
                 </div>
-
                 {/* Scroll down indicator */}
                 <motion.div
                     initial={{ opacity: 0 }}

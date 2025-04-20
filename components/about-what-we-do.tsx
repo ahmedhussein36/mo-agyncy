@@ -42,14 +42,24 @@ export function AboutWhatWeDo({
         <section ref={ref} className="py-20 bg-black/20">
             <div className="container px-4 md:px-6">
                 <EditableSection
-                    jsonPath="about.whatWeDo"
-                    id="about-what-we-do-header"
-                    type="mixed"
+                    jsonPath="about.whatWeDo.header"
+                    id="about.whatWeDo.header"
                     isAdmin={isAdmin}
+                    fields={[
+                        {
+                            name: "title",
+                            type: "text",
+                            label: "Title",
+                        },
+                        {
+                            name: "subtitle",
+                            type: "text",
+                            label: "Subtitle",
+                        },
+                    ]}
                     initialData={{
-                        title: dict.title,
-                        content:
-                            "We offer comprehensive influencer marketing solutions tailored to your brand's unique needs.",
+                        title: dict.header.title,
+                        subtitle: dict.header.subtitle,
                     }}
                 >
                     <motion.div
@@ -63,11 +73,12 @@ export function AboutWhatWeDo({
                         className="text-center mb-12"
                     >
                         <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-                            {dict.title}
+                            {dict.header.title}
                         </h2>
                         <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl mt-4">
-                            We offer comprehensive influencer marketing
-                            solutions tailored to your brand's unique needs.
+                            {dict.header.subtitle ||
+                                ` We offer comprehensive influencer marketing
+                            solutions tailored to your brand's unique needs.`}
                         </p>
                     </motion.div>
                 </EditableSection>
@@ -79,22 +90,36 @@ export function AboutWhatWeDo({
                     className="grid grid-cols-1 md:grid-cols-2 gap-8"
                 >
                     {dict.services.map((service: any, index: number) => (
-                        <motion.div
+                        <EditableSection
                             key={index}
-                            variants={item}
-                            className="bg-gradient-to-r from-purple-300/10 to-zinc-700/20 rounded-lg p-8 service-card-container transition-all duration-300 flex items-start space-x-6 rtl:space-x-reverse"
+                            jsonPath={`about.whatWeDo.services.${index}`}
+                            id={`about.whatWeDo.services.${index}`}
+                            isAdmin={isAdmin}
+                            fields={[
+                                {
+                                    name: "title",
+                                    type: "text",
+                                    label: "Title",
+                                },
+                                {
+                                    name: "description",
+                                    type: "textarea",
+                                    label: "description",
+                                },
+                            ]}
+                            initialData={{
+                                title: service.title,
+                                description: service.description,
+                            }}
                         >
-                            <div className="flex-shrink-0">{icons[index]}</div>
-                            <EditableSection
-                                jsonPath={`about.whatWeDo.services.${index}`}
-                                id={`about-service-${index}`}
-                                type="mixed"
-                                isAdmin={isAdmin}
-                                initialData={{
-                                    title: service.title,
-                                    content: service.description,
-                                }}
+                            <motion.div
+                                variants={item}
+                                className="bg-gradient-to-r from-purple-300/10 to-zinc-700/20 rounded-lg p-8 service-card-container transition-all duration-300 flex items-start space-x-6 rtl:space-x-reverse"
                             >
+                                <div className="flex-shrink-0">
+                                    {icons[index]}
+                                </div>
+
                                 <div>
                                     <h3 className="text-xl font-bold mb-2">
                                         {service.title}
@@ -103,8 +128,8 @@ export function AboutWhatWeDo({
                                         {service.description}
                                     </p>
                                 </div>
-                            </EditableSection>
-                        </motion.div>
+                            </motion.div>
+                        </EditableSection>
                     ))}
                 </motion.div>
             </div>

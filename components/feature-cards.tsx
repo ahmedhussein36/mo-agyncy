@@ -6,42 +6,16 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { EditableSection } from "@/components/admin/editable-section";
 
-// Sample data for feature cards
-const featureCards = [
-    {
-        id: 1,
-        title: "Strategic Partnerships",
-        description:
-            "Connect your brand with the perfect influencers who align with your values and target audience. Our proprietary matching algorithm ensures authentic partnerships that drive real results.",
-        image: "https://res.cloudinary.com/ds04j5ge0/image/upload/v1744450337/uploads/video_poster.ad5dd042f80bd76106661a111da1ece9_nftl3k.png?q=auto&f=auto",
-    },
-    {
-        id: 2,
-        title: "Data-Driven Campaigns",
-        description:
-            "Leverage our advanced analytics to optimize your influencer marketing campaigns. Get detailed insights into performance metrics, audience engagement, and ROI to make informed decisions.",
-        image: "https://res.cloudinary.com/ds04j5ge0/image/upload/v1744333498/uploads/influencer_analysis_tool_e7fl8k.webp?f=auto&q=auto",
-    },
-    {
-        id: 3,
-        title: "Creative Content Strategy",
-        description:
-            "Our team of experts helps develop compelling content strategies that resonate with your target audience. From concept to execution, we ensure your message is delivered effectively.",
-        image: "https://images.ctfassets.net/nfpsrlop6sws/5ByCsTWjAyWJHns43AfT06/9befc9d6befe10834d4828e4a7cc88a2/manage-influencers-centralize-communication-performance-payouts.png?w=1136&h=960&q=70&fm=webp",
-    },
-];
-
 export function FeatureCards({
     dict,
     isAdmin = false,
 }: {
     dict: {
-        title: string;
-        subtitle: string;
+        header: { title: string; subtitle: string };
         items: {
             id: number;
             title: string;
-            content: string;
+            description: string;
             image: string;
         }[];
     };
@@ -66,7 +40,6 @@ export function FeatureCards({
         { ref: card3Ref, isInView: isCard3InView },
     ];
 
-
     return (
         <section
             ref={containerRef}
@@ -75,13 +48,24 @@ export function FeatureCards({
             <div className="container px-4 md:px-6">
                 <div className="flex flex-col items-center justify-center space-y-4 text-center mb-16">
                     <EditableSection
-                        jsonPath="home.featureCards"
-                        id="feature-cards-header"
-                        type="mixed"
+                        jsonPath="home.featureCards.header"
+                        id="home.featureCards.header"
                         isAdmin={isAdmin}
+                        fields={[
+                            {
+                                name: "title",
+                                type: "text",
+                                label: "Title",
+                            },
+                            {
+                                name: "subtitle",
+                                type: "textarea",
+                                label: "Subtitle",
+                            },
+                        ]}
                         initialData={{
-                            title: dict.title,
-                            content: dict.subtitle,
+                            title: dict.header.title,
+                            subtitle: dict.header.subtitle,
                         }}
                     >
                         <motion.div
@@ -91,19 +75,19 @@ export function FeatureCards({
                             className="space-y-2"
                         >
                             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-                                {dict.title}
+                                {dict.header.title}
                             </h2>
                             <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
-                                {dict.subtitle}
+                                {dict.header.subtitle}
                             </p>
                         </motion.div>
                     </EditableSection>
                 </div>
 
                 <div className="space-y-32 md:space-y-40">
-                    {dict?.items?.map((card: any, index: number) => (
+                    {dict.items.map((card: any, index: number) => (
                         <div
-                            key={card.id}
+                            key={index}
                             ref={cardRefsAndStates[index].ref}
                             className="relative"
                         >
@@ -131,40 +115,47 @@ export function FeatureCards({
                                 } items-center gap-8 md:gap-12`}
                             >
                                 <div className="w-full md:w-1/2">
-                                    <EditableSection
-                                        jsonPath={`home.featureCards.items.${index}.image`}
-                                        id={`feature-card-image-${index}`}
-                                        type="image"
-                                        isAdmin={isAdmin}
-                                        initialData={{
-                                            imageUrl: card.image,
-                                        }}
-                                    >
-                                        <div className=" rounded-lg overflow-visible">
-                                            <Image
-                                                src={
-                                                    card.image ||
-                                                    "/placeholder.svg"
-                                                }
-                                                alt={card.title}
-                                                width={500}
-                                                height={100}
-                                                className="object-cover transition-transform duration-500 hover:scale-105"
-                                            />
-                                        </div>
-                                    </EditableSection>
+                                    <div className=" rounded-lg overflow-visible">
+                                        <Image
+                                            src={
+                                                card.image || "/placeholder.svg"
+                                            }
+                                            alt={card.title}
+                                            width={500}
+                                            height={100}
+                                            className="object-cover transition-transform duration-500 hover:scale-105"
+                                        />
+                                    </div>
                                 </div>
 
                                 <div className="w-full md:w-1/2 space-y-4">
                                     <EditableSection
                                         jsonPath={`home.featureCards.items.${index}`}
                                         id={`feature-card-content-${index}`}
-                                        type="mixed"
                                         isAdmin={isAdmin}
+                                        fields={[
+                                            {
+                                                name: "title",
+                                                type: "text",
+                                                label: "Title",
+                                            },
+                                            {
+                                                name: "description",
+                                                type: "textarea",
+                                                label: "Description",
+                                            },
+                                            {
+                                                name: "image",
+                                                type: "text",
+                                                label: "Image",
+                                            },
+                                        ]}
                                         initialData={{
                                             title: card.title,
-                                            content: card.content,
+                                            description: card.description,
+                                            image: card.image,
                                         }}
+                                        className="space-y-4"
                                     >
                                         <motion.h3
                                             className="text-2xl md:text-3xl font-bold text-brand"
@@ -221,7 +212,7 @@ export function FeatureCards({
                                                       }
                                             }
                                         >
-                                            {card.content}
+                                            {card.description}
                                         </motion.p>
                                     </EditableSection>
 

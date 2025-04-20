@@ -31,7 +31,10 @@ export function AboutStory({
                         className="relative h-[400px] rounded-lg overflow-hidden order-2 md:order-1"
                     >
                         <Image
-                            src="https://plus.unsplash.com/premium_photo-1661310038586-a99299befcc9?q=80&w=1080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                            src={
+                                dict.image ||
+                                "https://plus.unsplash.com/premium_photo-1661310038586-a99299befcc9?q=80&w=1080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                            }
                             alt="Our journey"
                             fill
                             className="object-cover"
@@ -56,14 +59,26 @@ export function AboutStory({
                     >
                         <EditableSection
                             jsonPath="about.story"
-                            id="about-story"
-                            type="mixed"
+                            id="about.story"
                             isAdmin={isAdmin}
+                            fields={[
+                                { name: "title", type: "text", label: "Title" },
+                                {
+                                    name: "content",
+                                    type: "textarea",
+                                    label: "Content",
+                                },
+                                {
+                                    name: "image",
+                                    type: "image",
+                                    label: "Image",
+                                },
+                            ]}
                             initialData={{
                                 title: dict.title,
                                 content: dict.content,
+                                image: dict.image,
                             }}
-                            className="space-y-4"
                         >
                             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">
                                 {dict.title}

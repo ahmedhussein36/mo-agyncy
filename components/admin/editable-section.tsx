@@ -1,84 +1,282 @@
-"use client";
-
 import { useState } from "react";
-import { EditDrawer } from "@/components/admin/edit-drawer";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Pencil } from "lucide-react";
+import { TooltipProvider } from "@radix-ui/react-tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
+import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { EditIcon } from "lucide-react";
+import { useLocale } from "@/hooks/useLocale";
+import { useToast } from "@/components/ui/use-toast";
+
+// أنواع الحقول المدعومة حاليًا
+export type FieldType = "text" | "textarea" | "image" | "richText" | "array";
+
+// تعريف كل حقل
+export interface EditableField {
+    name: string;
+    type: FieldType;
+    label?: string;
+    itemFields?: EditableField[]; // للحقول من نوع array
+}
 
 interface EditableSectionProps {
     id: string;
-    type: "title" | "content" | "mixed" | "image";
-    isAdmin?: boolean;
-    children: React.ReactNode;
-    initialData: {
-        title?: string;
-        content?: string;
-        imageUrl?: string;
-    };
-    className?: string;
     jsonPath: string;
+    isAdmin?: boolean;
+    initialData: Record<string, any>;
+    fields: EditableField[];
+    children: React.ReactNode;
+    className?: string;
 }
 
-export function EditableSection({
+export const EditableSection = ({
     id,
-    type,
-    isAdmin = false,
-    children,
-    initialData,
-    className,
     jsonPath,
-}: EditableSectionProps) {
-    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+    isAdmin = false,
+    initialData,
+    fields,
+    children,
+    className,
+}: EditableSectionProps) => {
+    const [isEditing, setIsEditing] = useState(false);
     const [data, setData] = useState(initialData);
+    const router = useRouter();
+    const locale = useLocale();
+    const { toast } = useToast();
 
-    const handleSave = async (newData: any) => {
+    const handleFieldChange = (name: string, value: any) => {
+        setData((prev) => ({ ...prev, [name]: value }));
+    };
+
+    const handleArrayChange = (
+        fieldName: string,
+        index: number,
+        key: string,
+        value: any
+    ) => {
+        const updatedArray = [...(data[fieldName] || [])];
+        updatedArray[index] = { ...updatedArray[index], [key]: value };
+        setData((prev) => ({ ...prev, [fieldName]: updatedArray }));
+    };
+
+    const handleSave = async () => {
+        setIsEditing(true);
         try {
-            // Call your API endpoint to update the JSON file
-            const response = await fetch("/api/content", {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    [jsonPath]: newData,
-                }),
+            await saveSectionData(jsonPath, data, locale);
+            router.refresh();
+            toast({
+                title: "Success",
+                description: "item has been update",
+                variant: "default",
             });
-
-            if (!response.ok) {
-                throw new Error("Failed to save content");
-            }
-
-            // Update local state
-            setData(newData);
-            return true; // Indicate success
         } catch (error) {
-            console.error("Error saving content:", error);
-            return false; // Indicate failure
+            toast({
+                title: "Error",
+                description: "Faild to Update item",
+                variant: "destructive",
+            });
+            console.log(error);
+        } finally {
+            setIsEditing(false);
         }
     };
 
-    return (
-        <div className={cn("relative group space-y-4", className)}>
-            {isAdmin && (
-                <>
-                    <button
-                        onClick={() => setIsDrawerOpen(true)}
-                        className="absolute -top-3 -right-3 bg-brand text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity shadow-lg"
-                    >
-                        <EditIcon className="h-4 w-4" />
-                    </button>
+    if (!isAdmin) return <>{children}</>;
 
-                    <EditDrawer
-                        isOpen={isDrawerOpen}
-                        onClose={() => setIsDrawerOpen(false)}
-                        sectionId={id}
-                        sectionType={type}
-                        initialData={data}
-                        onSave={handleSave}
-                    />
-                </>
+    return (
+        <div className={cn("relative group", className)}>
+            {isEditing && (
+                <div className="absolute top-0 end-0 z-20 space-x-2 rtl:space-x-reverse">
+                    <Button
+                        size="sm"
+                        onClick={handleSave}
+                        className="bg-brand hover:bg-brand-light"
+                    >
+                        Save
+                    </Button>
+                    <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => setIsEditing(false)}
+                    >
+                        Cancel
+                    </Button>
+                </div>
             )}
-            {children}
+            {!isEditing && (
+                <TooltipProvider>
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                            <button
+                                className=" rounded-full hover:opacity-75 transition-all bg-brand p-2 border border-white absolute top-0 end-0 z-20 hidden group-hover:block text-xs text-muted-foreground underline"
+                                onClick={() => setIsEditing(true)}
+                            >
+                                <Pencil className=" w-4 h-4 text-white " />
+                            </button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                            <p>Click to edit</p>
+                        </TooltipContent>
+                    </Tooltip>
+                </TooltipProvider>
+            )}
+
+            {isEditing ? (
+                <div className="space-y-4 border border-border rounded-xl p-4 mt-4">
+                    {fields.map(({ name, type, label, itemFields }) => (
+                        <div key={name} className="space-y-2">
+                            {label && (
+                                <label className="block text-sm font-medium mb-1">
+                                    {label}
+                                </label>
+                            )}
+
+                            {type === "text" && (
+                                <Input
+                                    value={data[name] || ""}
+                                    onChange={(e) =>
+                                        handleFieldChange(name, e.target.value)
+                                    }
+                                />
+                            )}
+
+                            {type === "textarea" && (
+                                <Textarea
+                                    value={data[name] || ""}
+                                    onChange={(e) =>
+                                        handleFieldChange(name, e.target.value)
+                                    }
+                                    rows={4}
+                                />
+                            )}
+
+                            {type === "image" && (
+                                <Input
+                                    type="url"
+                                    value={data[name] || ""}
+                                    onChange={(e) =>
+                                        handleFieldChange(name, e.target.value)
+                                    }
+                                    placeholder="رابط الصورة"
+                                />
+                            )}
+
+                            {type === "array" &&
+                                itemFields &&
+                                Array.isArray(data[name]) && (
+                                    <div className="space-y-4">
+                                        {data[name].map(
+                                            (item: any, idx: number) => (
+                                                <div
+                                                    key={idx}
+                                                    className="border rounded-lg p-3 space-y-2"
+                                                >
+                                                    {itemFields.map(
+                                                        (subField) => (
+                                                            <div
+                                                                key={
+                                                                    subField.name
+                                                                }
+                                                            >
+                                                                {subField.label && (
+                                                                    <label className="block text-sm font-medium mb-1">
+                                                                        {
+                                                                            subField.label
+                                                                        }
+                                                                    </label>
+                                                                )}
+                                                                {subField.type ===
+                                                                    "text" && (
+                                                                    <Input
+                                                                        value={
+                                                                            item[
+                                                                                subField
+                                                                                    .name
+                                                                            ] ||
+                                                                            ""
+                                                                        }
+                                                                        onChange={(
+                                                                            e
+                                                                        ) =>
+                                                                            handleArrayChange(
+                                                                                name,
+                                                                                idx,
+                                                                                subField.name,
+                                                                                e
+                                                                                    .target
+                                                                                    .value
+                                                                            )
+                                                                        }
+                                                                    />
+                                                                )}
+                                                                {subField.type ===
+                                                                    "textarea" && (
+                                                                    <Textarea
+                                                                        value={
+                                                                            item[
+                                                                                subField
+                                                                                    .name
+                                                                            ] ||
+                                                                            ""
+                                                                        }
+                                                                        onChange={(
+                                                                            e
+                                                                        ) =>
+                                                                            handleArrayChange(
+                                                                                name,
+                                                                                idx,
+                                                                                subField.name,
+                                                                                e
+                                                                                    .target
+                                                                                    .value
+                                                                            )
+                                                                        }
+                                                                    />
+                                                                )}
+                                                            </div>
+                                                        )
+                                                    )}
+                                                </div>
+                                            )
+                                        )}
+                                    </div>
+                                )}
+                        </div>
+                    ))}
+                </div>
+            ) : (
+                children
+            )}
         </div>
     );
-}
+};
+
+export const saveSectionData = async (
+    jsonPath: string,
+    formData: any,
+    locale: "en" | "ar"
+) => {
+    try {
+        const response = await fetch(`/api/content/${locale}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                jsonPath,
+                data: formData,
+            }),
+        });
+
+        const result = await response.json();
+        if (result.success) {
+            console.log("Data saved successfully!");
+        } else {
+            console.error("Error saving data:", result.error);
+        }
+    } catch (error) {
+        console.error("Failed to save section data:", error);
+    }
+};

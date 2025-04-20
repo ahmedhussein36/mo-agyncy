@@ -31,7 +31,7 @@ export default async function Home({
     const footer = dict.footer || {};
     const contact = dict?.about?.contact || {};
     const topCreators = dict.home?.topCreators || {};
-    const featureCards = dict.home?.featureCards || {};
+    const featureCards = dict.home.featureCards || {};
     const partners = dict.home?.partners || {};
 
     const { influencers, error } = await getInfluencers(1, 8, "APPROVED");
@@ -40,6 +40,7 @@ export default async function Home({
             <Header dict={navigation} />
             <main className="flex-1">
                 <Hero dict={hero} isAdmin={isAdmin} />
+                <About dict={about} isAdmin={isAdmin} />
                 <Services dict={services} isAdmin={isAdmin} />
                 {/* <TopCreators dict={topCreators} creators={influencers as any} /> */}
                 <TopCreatorsGrid
@@ -49,7 +50,6 @@ export default async function Home({
                 <Partners dict={partners} isAdmin={isAdmin} />
                 <Stats dict={stats} isAdmin={isAdmin} />
                 <FeatureCards dict={featureCards as any} isAdmin={isAdmin} />
-                <About dict={about} isAdmin={isAdmin} />
             </main>
             <ContactCTA dict={contact} lang={lang} isAdmin={isAdmin} />
             <Footer dict={footer} />

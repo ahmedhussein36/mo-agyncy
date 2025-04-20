@@ -7,7 +7,7 @@ import { PageTransition } from "@/components/page-transition";
 import { ToastProvider } from "@/components/ui/use-toast";
 import { i18n } from "@/i18n.config";
 import "@/app/globals.css";
-import { cn } from "@/lib/utils";
+import TopLoader from "@/components/top-loader";
 
 export async function generateStaticParams() {
     return i18n.locales.map((locale) => ({ lang: locale }));
@@ -23,9 +23,9 @@ export default async function RootLayout({
     params,
 }: {
     children: React.ReactNode;
-    params: Promise<{ lang: Locale }>;
+    params: { lang: Locale };
 }) {
-    const locale = (await params).lang;
+    const { lang: locale } = params; 
 
     return (
         <html
@@ -33,7 +33,8 @@ export default async function RootLayout({
             dir={locale === "ar" ? "rtl" : "ltr"}
             suppressHydrationWarning
         >
-            <body>
+            <body className="bg-zinc-900 text-foreground antialiased">
+                <TopLoader />
                 <ThemeProvider
                     attribute="class"
                     defaultTheme="dark"

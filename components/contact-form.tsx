@@ -39,12 +39,20 @@ export function ContactForm({
             <div className="container px-4 md:px-6">
                 <div className="flex flex-col items-center justify-center space-y-4 text-center">
                     <EditableSection
-                        id="contact-header"
-                        type="mixed"
+                        id="contact.header"
+                        jsonPath="contact.header"
                         isAdmin={isAdmin}
+                        fields={[
+                            { name: "title", type: "text", label: "Title" },
+                            {
+                                name: "subtitle",
+                                type: "textarea",
+                                label: "Subtitle",
+                            },
+                        ]}
                         initialData={{
-                            title: dict.title,
-                            content: dict.subtitle,
+                            title: dict.header.title,
+                            subtitle: dict.header.subtitle,
                         }}
                     >
                         <motion.div
@@ -54,10 +62,10 @@ export function ContactForm({
                             className="space-y-2"
                         >
                             <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-                                {dict.title}
+                                {dict.header.title}
                             </h1>
                             <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
-                                {dict.subtitle}
+                                {dict.header.subtitle}
                             </p>
                         </motion.div>
                     </EditableSection>
@@ -77,74 +85,135 @@ export function ContactForm({
                         className="space-y-6"
                     >
                         <EditableSection
-                            id="contact-info-address"
-                            type="mixed"
+                            jsonPath="contact.info.address"
+                            id="contact.info.address"
                             isAdmin={isAdmin}
+                            fields={[
+                                {
+                                    name: "label",
+                                    type: "text",
+                                    label: "Label",
+                                },
+                                {
+                                    name: "address",
+                                    type: "text",
+                                    label: "Address",
+                                },
+                            ]}
                             initialData={{
-                                title: "Address",
-                                content: dict.info.address,
+                                label: dict.info.address.label,
+                                address: dict.info.address.address,
                             }}
                         >
                             <div className="flex items-center space-x-4 rtl:space-x-reverse">
                                 <MapPin className="h-6 w-6 text-brand" />
                                 <div>
-                                    <h3 className="font-medium">Address</h3>
+                                    <h3 className="font-medium">
+                                        {dict.info.address.label}
+                                    </h3>
                                     <p className="text-sm text-muted-foreground">
-                                        {dict.info.address}
+                                        {dict.info.address.address}
                                     </p>
                                 </div>
                             </div>
                         </EditableSection>
 
                         <EditableSection
-                            id="contact-info-email"
-                            type="mixed"
+                            jsonPath="contact.info.email"
+                            id="contact.info.email"
                             isAdmin={isAdmin}
+                            fields={[
+                                {
+                                    name: "label",
+                                    type: "text",
+                                    label: "Label",
+                                },
+                                {
+                                    name: "email",
+                                    type: "text",
+                                    label: "Email",
+                                },
+                            ]}
                             initialData={{
-                                title: "Email",
-                                content: dict.info.email,
+                                label: dict.info.email.label,
+                                email: dict.info.email.email,
                             }}
                         >
                             <div className="flex items-center space-x-4 rtl:space-x-reverse">
                                 <Mail className="h-6 w-6 text-brand" />
                                 <div>
-                                    <h3 className="font-medium">Email</h3>
+                                    <h3 className="font-medium">
+                                        {dict.info.email.label}
+                                    </h3>
                                     <p className="text-sm text-muted-foreground">
-                                        {dict.info.email}
+                                        {dict.info.email.email}
                                     </p>
                                 </div>
                             </div>
                         </EditableSection>
 
                         <EditableSection
-                            id="contact-info-phone"
-                            type="mixed"
+                            jsonPath="contact.info.phone"
+                            id="contact.info.phone"
                             isAdmin={isAdmin}
+                            fields={[
+                                {
+                                    name: "label",
+                                    type: "text",
+                                    label: "Label",
+                                },
+                                {
+                                    name: "phone",
+                                    type: "text",
+                                    label: "Phone",
+                                },
+                            ]}
                             initialData={{
-                                title: "Phone",
-                                content: dict.info.phone,
+                                label: dict.info.phone.label,
+                                phone: dict.info.phone.phone,
                             }}
                         >
                             <div className="flex items-center space-x-4 rtl:space-x-reverse">
                                 <Phone className="h-6 w-6 text-brand" />
                                 <div>
-                                    <h3 className="font-medium">Phone</h3>
+                                    <h3 className="font-medium">
+                                        {dict.info.phone.label}
+                                    </h3>
                                     <p className="text-sm text-muted-foreground">
-                                        {dict.info.phone}
+                                        {dict.info.phone.phone}
                                     </p>
                                 </div>
                             </div>
                         </EditableSection>
 
-                        <div className="aspect-video overflow-hidden rounded-lg">
-                            <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d387193.3059353029!2d-74.25986548248684!3d40.69714941932609!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY%2C%20USA!5e0!3m2!1sen!2sca!4v1619756483125!5m2!1sen!2sca"
-                                className="h-full w-full border-0"
-                                allowFullScreen
-                                loading="lazy"
-                                title="Map"
-                            />
-                        </div>
+                        <EditableSection
+                            jsonPath="contact.info.location"
+                            id="contact.info.location"
+                            isAdmin={isAdmin}
+                            fields={[
+                                {
+                                    name: "label",
+                                    type: "text",
+                                    label: "Label",
+                                },
+                                {
+                                    name: "location",
+                                    type: "text",
+                                    label: "Location",
+                                },
+                            ]}
+                            initialData={{
+                                label: dict.info.location.label,
+                                location: dict.info.location.location,
+                            }}
+                        >
+                            <div className="aspect-video overflow-hidden rounded-lg">
+                                {MapEmbed({
+                                    place:
+                                        dict.info.location.location || "maadi",
+                                })}
+                            </div>
+                        </EditableSection>
                     </motion.div>
                     <motion.div
                         initial={{ opacity: 0, x: 50 }}
@@ -245,5 +314,23 @@ export function ContactForm({
                 </div>
             </div>
         </section>
+    );
+}
+
+export function MapEmbed({ place }: { place: string }) {
+    const location = `https://www.google.com/maps?q=${encodeURIComponent(
+        place
+    )}&output=embed`;
+
+    return (
+        <div className="aspect-video overflow-hidden rounded-lg">
+            <iframe
+                src={location}
+                className="h-full w-full border-0"
+                allowFullScreen
+                loading="lazy"
+                title="Map"
+            />
+        </div>
     );
 }

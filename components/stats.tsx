@@ -83,9 +83,9 @@ export function Stats({
             <div className="container px-4 md:px-6">
                 <EditableSection
                     jsonPath="home.stats.title"
-                    id="stats-header"
-                    type="title"
+                    id="home.state.title"
                     isAdmin={isAdmin}
+                    fields={[{ name: "title", type: "text", label: "Title" }]}
                     initialData={{
                         title: dict.title,
                     }}
@@ -120,19 +120,32 @@ export function Stats({
                             >
                                 <EditableSection
                                     jsonPath={`home.stats.items.${index}`}
-                                    id={`stat-item-${index}`}
-                                    type="mixed"
+                                    id={`stats.item-${index}`}
                                     isAdmin={isAdmin}
+                                    fields={[
+                                        {
+                                            name: "value",
+                                            type: "text",
+                                            label: "Value",
+                                        },
+                                        {
+                                            name: "label",
+                                            type: "text",
+                                            label: "Label",
+                                        },
+                                    ]}
                                     initialData={{
-                                        title: stat.value,
-                                        content: stat.label,
+                                        value: stat.value,
+                                        label: stat.label,
                                     }}
                                 >
                                     <div className="text-4xl font-bold text-brand md:text-5xl">
                                         {counts[index] || 0}
-                                        {stat.value.includes("+") ? "+" : ""}
+                                        {stat.value.includes("M") ? "M" : ""}
+                                        {stat.value.includes("K") ? "K" : ""}
+                                        {stat.value.includes("+") ? "+" : "+"}
                                     </div>
-                                    <div className="text-sm font-medium text-muted-foreground md:text-base">
+                                    <div className="text-sm font-medium text-muted-foreground md:text-base text-center mt-4">
                                         {stat.label}
                                     </div>
                                 </EditableSection>
