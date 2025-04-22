@@ -11,6 +11,7 @@ import {
     FaTwitter,
     FaYoutube,
 } from "react-icons/fa6";
+import { CountryFlag } from "./country-flag";
 
 // Platform icon mapping
 export const platformIcons = (platform: string) => {
@@ -88,7 +89,8 @@ export function CreatorCard({
 
                     {/* Creator details with backdrop blur - positioned at the bottom */}
                     <div className="relative z-10 p-4 backdrop-blur-sm bg-black/80 flex flex-col">
-                        <div className=" relative w-full flex items-center justify-between mb-3">
+                        <div className=" relative w-full flex items-center justify-start gap-2 mb-3">
+                            <CountryFlag country={creator.country || ""} style={{width : "20px", height : "16px" }} />
                             <h3 className="text-lg font-bold truncate">
                                 {creator.name}
                             </h3>

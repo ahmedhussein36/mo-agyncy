@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useLanguage } from "@/components/language-provider";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Facebook, Instagram, Twitter, Youtube } from "lucide-react";
 import HeartComponent from "./developer";
 
 export function Footer({ dict = {} }: { dict: any }) {
@@ -15,11 +14,9 @@ export function Footer({ dict = {} }: { dict: any }) {
             <div className="container px-4 md:px-6">
                 <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
                     <div className="space-y-4">
-                        <h3 className="text-lg font-bold text-brand">
-                            {"Mo Agency"}
-                        </h3>
+                        <img src="/uploads/brand-logo.png" width={150} />
                         <p className="text-sm text-muted-foreground">
-                            "© 2024 Mo Agency. All rights reserved.
+                            "© 2024 Moe Agency. All rights reserved.
                         </p>
                         <div className="flex space-x-4 rtl:space-x-reverse">
                             <Link

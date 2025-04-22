@@ -2,7 +2,7 @@ const TermsEN = () => (
     <div className="space-y-4 text-base ">
         <h1 className="text-3xl font-bold">Terms of Service</h1>
         <p>
-            These Terms of Service govern your use of the MO Agency website and
+            These Terms of Service govern your use of the MOE Agency website and
             services. By accessing our platform, you agree to these terms.
         </p>
 
@@ -20,7 +20,7 @@ const TermsEN = () => (
 
         <h2 className="text-xl font-semibold">3. Intellectual Property</h2>
         <p>
-            All content and branding on this site belong to MO Agency.
+            All content and branding on this site belong to MOE Agency.
             Unauthorized use is prohibited.
         </p>
 
@@ -34,7 +34,7 @@ const TermsEN = () => (
         </p>
 
         <h2 className="text-xl font-semibold">6. Contact</h2>
-        <p>If you have any questions, contact us at: support@moeagency.com</p>
+        <p>If you have any questions, contact us at: support@moeagency.net</p>
     </div>
 );
 
@@ -42,7 +42,7 @@ const TermsAR = () => (
     <div className="space-y-4 text-base text-right">
         <h1 className="text-3xl font-bold">شروط الخدمة</h1>
         <p>
-            تحكم شروط الخدمة هذه استخدامك لموقع وخدمات وكالة MO. باستخدامك
+            تحكم شروط الخدمة هذه استخدامك لموقع وخدمات MOE Agency. باستخدامك
             لمنصتنا، فإنك توافق على هذه الشروط.
         </p>
 
@@ -60,7 +60,7 @@ const TermsAR = () => (
 
         <h2 className="text-xl font-semibold">٣. الملكية الفكرية</h2>
         <p>
-            جميع المحتويات والعلامات التجارية في هذا الموقع مملوكة لوكالة MO.
+            جميع المحتويات والعلامات التجارية في هذا الموقع مملوكة MOE Agency.
             يمنع الاستخدام غير المصرح به.
         </p>
 

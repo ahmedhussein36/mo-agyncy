@@ -2,7 +2,7 @@ const PrivacyPolicyEN = () => (
     <div className="space-y-4 text-base">
         <h1 className="text-3xl font-bold">Privacy Policy</h1>
         <p>
-            At MO Agency, we are committed to protecting your personal
+            At MOE Agency, we are committed to protecting your personal
             information and your right to privacy. This Privacy Policy explains
             what information we collect, how we use it, and what rights you have
             in relation to it.
@@ -45,13 +45,13 @@ const PrivacyPolicyEN = () => (
         <h2 className="text-xl font-semibold">5. Your Rights</h2>
         <p>
             You have the right to access, update, or delete your data. To
-            exercise these rights, contact us at: privacy@moeagency.com
+            exercise these rights, contact us at: privacy@MOE Agencyeagency.com
         </p>
 
         <h2 className="text-xl font-semibold">6. Contact Us</h2>
         <p>
             If you have questions or concerns about this policy, email us at:
-            contact@moeagency.com
+            contact@moeagency.net
         </p>
     </div>
 );
@@ -60,7 +60,7 @@ const PrivacyPolicyAR = () => (
     <div className="space-y-4 text-base text-right">
         <h1 className="text-3xl font-bold">سياسة الخصوصية</h1>
         <p>
-            في وكالة MO، نحن ملتزمون بحماية معلوماتك الشخصية وخصوصيتك. توضح
+            في MOE Agency نحن ملتزمون بحماية معلوماتك الشخصية وخصوصيتك. توضح
             سياسة الخصوصية هذه البيانات التي نجمعها، وكيف نستخدمها، وما هي حقوقك
             المتعلقة بها.
         </p>
@@ -100,13 +100,13 @@ const PrivacyPolicyAR = () => (
         <h2 className="text-xl font-semibold">٥. حقوقك</h2>
         <p>
             لك الحق في الوصول إلى بياناتك الشخصية أو تعديلها أو طلب حذفها.
-            لممارسة هذه الحقوق، تواصل معنا عبر: privacy@moeagency.com
+            لممارسة هذه الحقوق، تواصل معنا عبر: contact@moeagency.net
         </p>
 
         <h2 className="text-xl font-semibold">٦. تواصل معنا</h2>
         <p>
             إذا كان لديك أي استفسارات بخصوص هذه السياسة، راسلنا عبر البريد:
-            contact@moeagency.com
+            contact@moeagency.net
         </p>
     </div>
 );

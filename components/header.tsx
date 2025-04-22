@@ -107,7 +107,7 @@ export function Header({ dict = {} }: { dict: any }) {
                             asChild
                             variant="outline"
                             size="sm"
-                            className="rounded-full transition-all duration-300 hover:border-brand button-hover"
+                            className="bg-transparent rounded-full transition-all duration-300 border-brand-light border-2 hover:border-brand button-hover"
                         >
                             <Link href={`/${lang}/register/influencer`}>
                                 {dict.register?.influencer ||

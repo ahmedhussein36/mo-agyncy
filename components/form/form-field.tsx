@@ -145,6 +145,12 @@ export const InfluencerTextFields = [
         required: true,
     },
     {
+        name: "country",
+        label: "Country",
+        type: "text",
+        required: false,
+    },
+    {
         name: "dateOfBirth",
         label: "Birth Date",
         type: "date",
