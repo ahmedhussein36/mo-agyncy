@@ -1,26 +1,22 @@
 // app/api/upload/route.ts
-import { writeFile } from "fs/promises";
+import { NextRequest, NextResponse } from "next/server";
 import path from "path";
+import { writeFile } from "fs/promises";
+import { v4 as uuid } from "uuid";
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
     const formData = await req.formData();
-    const file = formData.get("file") as File;
+    const file = formData.get("image") as File;
 
-    if (!file) {
-        return new Response(JSON.stringify({ error: "No file uploaded" }), {
-            status: 400,
-        });
-    }
+    if (!file) return NextResponse.json({ error: "No file" }, { status: 400 });
 
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    const filename = `${Date.now()}-${file.name}`;
-    const filePath = path.join(process.cwd(), "uploads", filename);
+    const filename = `${file.name}-${uuid()}.png`;
+    const uploadPath = path.join(process.cwd(), "public/uploads", filename);
 
-    await writeFile(filePath, buffer);
+    await writeFile(uploadPath, buffer);
 
-    return new Response(JSON.stringify({ url: `/uploads/${filename}` }), {
-        status: 200,
-    });
+    return NextResponse.json({ url: `/uploads/${filename}` });
 }

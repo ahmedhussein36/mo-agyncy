@@ -1,9 +1,9 @@
 "use client";
 
+import { formatNumberShort } from "@/lib/number-formate";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { Eye, Play } from "lucide-react";
 import {
     FaFacebook,
     FaInstagram,
@@ -45,7 +45,7 @@ export type Creator = {
     socialLinks?: {
         platform: string;
         url: string;
-        followers: string;
+        followers: number;
     }[];
 };
 
@@ -56,6 +56,8 @@ export function CreatorCard({
     creator: Creator;
     index: number;
 }) {
+    const formatedFollowers = formatNumberShort;
+
     return (
         <motion.div
             initial={{ opacity: 0, y: 20, scale: 1 }}
@@ -112,7 +114,7 @@ export function CreatorCard({
                                 >
                                     <span>{platformIcons(link.platform)}</span>
                                     <span className="ml-1">
-                                        {link.followers}
+                                        {formatedFollowers(link.followers)}
                                     </span>
                                 </Link>
                             ))}

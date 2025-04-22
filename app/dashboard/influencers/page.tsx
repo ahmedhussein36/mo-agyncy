@@ -142,7 +142,7 @@ export default async function InfluencersPage({
                                         {influencer?.country || "N/A"}
                                     </TableCell>
                                     <TableCell>
-                                        {influencer?.followers.toLocaleString() || 0}
+                                        {influencer?.followers || "N/A"}
                                     </TableCell>
                                     <TableCell>
                                         {influencer?.approvedAt

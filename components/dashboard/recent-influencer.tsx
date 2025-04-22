@@ -78,7 +78,7 @@ export function RecentInfluencers({ influencers }: RecentInfluencersProps) {
                             <TableCell className="text-right">
                                 <Button asChild size="sm" className=" bg-blue-600 hover:bg-blue-500">
                                     <Link
-                                        href={`/dashboard/influencers?id=${influencer.id}`}
+                                        href={`/dashboard/influencers/${influencer.id}`}
                                     >
                                         View 
                                         <ArrowRight className="ms-1 h-4 w-4" />

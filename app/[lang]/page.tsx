@@ -6,14 +6,41 @@ import { Stats } from "@/components/stats";
 import { About } from "@/components/about";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
-import { TopCreators } from "@/components/top-creators";
 import { FeatureCards } from "@/components/feature-cards";
 import { Partners } from "@/components/partners";
-import { allCreators } from "@/data/creators";
 import { getCurrentUser } from "@/lib/auth";
 import { ContactCTA } from "@/components/contact-cta";
 import { getInfluencers } from "@/actions/influencer-actions";
 import TopCreatorsGrid from "@/components/top-creators/top-creators-grid";
+
+export async function generateMetadata({
+    params,
+}: {
+    params: { lang: Locale };
+}) {
+    const { lang } = params;
+    const metaTitle = "MoeAgency | Influencer marketing Agency";
+    const metaDescription =
+        "Discover top influencers and grow your brand with our agency.";
+    const altLangs = ["en", "ar"].filter((l) => l !== lang);
+
+    return {
+        title: metaTitle,
+        description: metaDescription,
+        openGraph: {
+            title: metaTitle,
+            description: metaDescription,
+            locale: lang,
+            type: "website",
+        },
+        alternates: {
+            languages: altLangs.reduce((acc, l) => {
+                acc[l] = `/${l}`;
+                return acc;
+            }, {} as Record<string, string>),
+        },
+    };
+}
 
 export default async function Home({
     params,

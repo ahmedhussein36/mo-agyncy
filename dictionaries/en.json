@@ -319,7 +319,7 @@
       },
       "email": {
         "label": "Email",
-        "email": "info@moeagency.com"
+        "email": "info@moeagency.net"
       },
       "location": {
         "label": "Find us",
@@ -376,6 +376,8 @@
         "name": "Full Name",
         "email": "Email",
         "phone": "Phone Number",
+        "dateOfBirth": "date Of Birth",
+        "gender": "Gender",
         "social": {
           "title": "Social Media Platforms",
           "instagram": "Instagram Username",

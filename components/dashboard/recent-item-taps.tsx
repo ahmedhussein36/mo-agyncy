@@ -79,7 +79,7 @@ export function PendingRequestsTabs({
                                 className="bg-transparent border-cyan-500/30 hover:bg-cyan-500/10 text-cyan-500"
                             >
                                 <Link
-                                    href={`/dashboard/${type}/pending?id=${request.id}`}
+                                    href={`/dashboard/${type}/${request.id}`}
                                 >
                                     Review
                                 </Link>

@@ -13,6 +13,7 @@ import {
     FaXTwitter,
     FaYoutube,
 } from "react-icons/fa6";
+import { useRouter } from "next/navigation";
 
 interface SocialMedia {
     platform?: string;
@@ -22,6 +23,7 @@ interface SocialMedia {
 
 type TopInfluencerProps = {
     influencer: {
+        id: string;
         name: string;
         username: string;
         image: string;
@@ -32,6 +34,8 @@ type TopInfluencerProps = {
 };
 
 export function TopInfluencerCard({ influencer }: TopInfluencerProps) {
+    const router = useRouter();
+
     const socialIcons = (platform: string) => {
         switch (platform) {
             case "instagram":
@@ -50,7 +54,14 @@ export function TopInfluencerCard({ influencer }: TopInfluencerProps) {
     };
 
     return (
-        <Card className="relative bg-gradient-to-br from-purple-600 to-indigo-600 text-white shadow-lg overflow-hidden p-4 rounded-xl">
+        <Card
+            onClick={() =>
+                router.push(`/dashboard/influencers/${influencer.id}`)
+            }
+            className="relative bg-gradient-to-br from-purple-600 to-indigo-600 
+             cursor-pointer hover:opacity-80 transition-all
+            text-white shadow-lg overflow-hidden p-4 rounded-xl"
+        >
             <FaAward className="absolute top-4 right-4 text-slate-100 h-8 w-8" />
             <h3 className=" text-xl font-bold ">Top Creator</h3>
             <motion.div

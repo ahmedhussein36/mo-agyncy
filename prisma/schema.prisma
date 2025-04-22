@@ -46,7 +46,7 @@ model Influencer {
   gender        String?
   dateOfBirth   DateTime?
   socialLinks   SocialMedia[]
-  followers      String?        
+  followers     String?
   status        ApprovalStatus @default(PENDING)
   approvedBy    String?        @db.ObjectId
   approvedAt    DateTime?
@@ -93,5 +93,5 @@ enum ApprovalStatus {
 type SocialMedia {
   platform  String?
   url       String?
-  followers String?
+  followers Int?
 }

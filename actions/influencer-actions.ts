@@ -9,7 +9,7 @@ import { sanitizeHtml } from "@/lib/utils";
 const SocialLinkSchema = z.object({
     platform: z.string(),
     url: z.string().url("Invalid URL"),
-    followers: z.string(),
+    followers: z.number(),
 });
 
 const InfluencerSchema = z.object({
@@ -28,12 +28,12 @@ const InfluencerSchema = z.object({
 });
 
 export async function getInfluencers(
-    page = 1,
-    limit = 10,
-    status = "APPROVED",
-    search = "",
-    category = "",
-    country = ""
+    page: number,
+    limit: number,
+    status: "APPROVED" | "PENDING" | "REJECTED",
+    search?: string,
+    category?: string,
+    country?: string
 ) {
     const currentUser = await getCurrentUser();
 
@@ -45,7 +45,7 @@ export async function getInfluencers(
 
     try {
         const where: any = {
-            status: status as any,
+            status: status,
             ...(search && {
                 OR: [
                     { name: { contains: search, mode: "insensitive" } },
@@ -58,7 +58,7 @@ export async function getInfluencers(
 
         const [influencers, totalCount] = await Promise.all([
             prisma.influencer.findMany({
-                // where,
+                where,
                 skip,
                 take: limit,
                 orderBy: { createdAt: "desc" },
@@ -95,14 +95,22 @@ export async function createInfluencer(formData: FormData) {
 
     // Parse social links from form data
     const socialLinksJson = formData.get("socialLinks") as string;
-    let socialLinks = [];
+    let socialLinks: { platform: string; url: string; followers: number }[] =
+        [];
 
     try {
         if (socialLinksJson) {
-            socialLinks = JSON.parse(socialLinksJson).map((link: any) => ({
-                ...link,
-                followers: link.followers !== undefined ? link.followers : 0, // Ensure followers is always a number
-            }));
+            socialLinks = JSON.parse(socialLinksJson).map(
+                (link: {
+                    platform: string;
+                    url: string;
+                    followers: number;
+                }) => ({
+                    ...link,
+                    followers:
+                        link.followers !== undefined ? link.followers : 0, // Ensure followers is always a number
+                })
+            );
         }
     } catch (error) {
         return { error: "Invalid social links format" };
@@ -120,8 +128,8 @@ export async function createInfluencer(formData: FormData) {
         image: formData.get("image"),
         category: formData.get("category"),
         country: formData.get("country"),
-        followers: Number.parseInt(formData.get("followers") as string) || 0,
-        socialLinks,
+        followers: formData.get("followers") || "",
+        socialLinks: socialLinks,
         dateOfBirth: formData.get("dateOfBirth")
             ? new Date(formData.get("dateOfBirth") as string)
             : undefined,
@@ -148,7 +156,7 @@ export async function createInfluencer(formData: FormData) {
         await prisma.influencer.create({
             data: {
                 ...influencerData,
-                status: "APPROVED",
+                status: influencerData.status || "APPROVED",
                 approvedBy: currentUser.id,
                 approvedAt: new Date(),
             },
@@ -183,7 +191,7 @@ export async function updateInfluencer(
         if (socialLinksJson) {
             socialLinks = JSON.parse(socialLinksJson).map((link: any) => ({
                 ...link,
-                followers: link.followers !== undefined ? link.followers : 0, // Ensure followers is always a number
+                followers: link.followers !== undefined ? link.followers : "", // Ensure followers is always a number
             }));
         }
     } catch (error) {
@@ -202,8 +210,7 @@ export async function updateInfluencer(
         image: formData.get("image"),
         category: formData.get("category"),
         country: formData.get("country"),
-        followers:
-            Number.parseInt(formData.get("followers") as string) || undefined,
+        followers: formData.get("followers"),
         socialLinks: socialLinks.length > 0 ? socialLinks : undefined,
     });
 
@@ -219,7 +226,7 @@ export async function updateInfluencer(
             data: influencerData,
         });
 
-        revalidatePath("/dashboard/influencers");
+        revalidatePath(`/dashboard/influencers/${influencerId}`);
         return { success: "Influencer updated successfully" };
     } catch (error) {
         console.error("Error updating influencer:", error);

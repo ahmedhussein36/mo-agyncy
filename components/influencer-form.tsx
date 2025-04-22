@@ -2,59 +2,139 @@
 
 import type React from "react";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useTransition } from "react";
 import { useInView } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
 import { motion } from "framer-motion";
-import SocialMediaInputs from "./social-inputs";
+import {
+    audienceSizes,
+    creatorCategories,
+    InfluencerTextFields,
+    InputField,
+    platforms,
+    SelectField,
+} from "./form/form-field";
+import { useForm } from "react-hook-form";
+import { createInfluencer } from "@/actions/influencer-actions";
+import { useToast } from "./ui/use-toast";
 
 export function InfluencerForm({ dict }: { dict: any }) {
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [isSuccess, setIsSuccess] = useState(false);
     const formRef = useRef<HTMLDivElement>(null);
     const isInView = useInView(formRef, { once: true, amount: 0.2 });
+    const [isSuccess, setIsSuccess] = useState(false);
+    const [selectedPlatforms, setSelectedPlatforms] = useState<string[]>([]);
+    const [socialLinks, setSocialLinks] = useState<
+        { platform: string; url: string; followers: number }[]
+    >([]);
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        setIsSubmitting(true);
+    const {
+        register,
+        handleSubmit,
+        control,
+        formState: { errors },
+    } = useForm({
+        defaultValues: {
+            name: "",
+            email: "",
+            phone: "",
+            image: "",
+            dateOfBirth: "",
+            status: "PENDING",
+            bio: "",
+            gender: "",
+            category: "",
+            country: "",
+            followers: "",
+        },
+    });
 
-        // Simulate form submission
-        await new Promise((resolve) => setTimeout(resolve, 1500));
-
-        setIsSubmitting(false);
-        setIsSuccess(true);
+    const togglePlatform = (platform: string) => {
+        if (selectedPlatforms.includes(platform)) {
+            setSelectedPlatforms(
+                selectedPlatforms.filter((p) => p !== platform)
+            );
+            setSocialLinks((prev) =>
+                prev.filter((p) => p.platform !== platform)
+            );
+        } else {
+            setSelectedPlatforms([...selectedPlatforms, platform]);
+        }
     };
 
-    const categories = [
-        "Fashion & Style",
-        "Beauty & Makeup",
-        "Fitness & Health",
-        "Travel & Adventure",
-        "Food & Cooking",
-        "Technology & Gaming",
-        "Business & Finance",
-        "Lifestyle & Home",
-        "Entertainment",
-        "Other",
-    ];
+    const handleSocialLinksChange = (
+        platform: string,
+        field: "followers" | "url",
+        value: string
+    ) => {
+        setSocialLinks((prev) => {
+            const existing = prev.find((p) => p.platform === platform);
+            if (existing) {
+                return prev.map((p) =>
+                    p.platform === platform
+                        ? {
+                              ...p,
+                              [field]:
+                                  field === "followers" ? Number(value) : value,
+                          }
+                        : p
+                );
+            }
+            return [
+                ...prev,
+                {
+                    platform,
+                    url: field === "url" ? value : "",
+                    followers: field === "followers" ? Number(value) : 0,
+                },
+            ];
+        });
+    };
 
-    const audienceSizes = [
-        "1K - 10K",
-        "10K - 50K",
-        "50K - 100K",
-        "100K - 500K",
-        "500K - 1M",
-        "1M+",
-    ];
+    const [isPending, startTransition] = useTransition();
+    const { toast } = useToast();
+
+    const onSubmit = (data: any) => {
+        const formData = new FormData();
+
+        for (const key in data) {
+            if (key !== "socialLinks") {
+                formData.append(key, data[key]);
+            }
+        }
+
+        formData.append("socialLinks", JSON.stringify(socialLinks));
+
+        startTransition(async () => {
+            try {
+                const result = await createInfluencer(formData);
+                if (result?.success) {
+                    setIsSuccess(true);
+                    toast({
+                        title: "Success",
+                        description: "Your request has been sent Successfully.",
+                        variant: "default",
+                    });
+                } else {
+                    toast({
+                        title: "Error",
+                        description: "Something went wrong.",
+                        variant: "destructive",
+                    });
+                    console.log(result.error || "Something went wrong");
+
+                }
+            } catch (error) {
+                toast({
+                    title: "Error creating influencer",
+                    description: "Something went wrong.",
+                    variant: "destructive",
+                });
+                console.log(error || "Something went wrong");
+            }
+        });
+    };
 
     return (
         <section className="py-24 bg-">
@@ -74,7 +154,10 @@ export function InfluencerForm({ dict }: { dict: any }) {
                         </p>
                     </motion.div>
                 </div>
-                <div ref={formRef} className="mx-auto mt-12 max-w-2xl">
+                <div
+                    ref={formRef}
+                    className="mx-auto mt-12 max-w-2xl bg-zinc-800 border-0 rounded-lg"
+                >
                     <motion.div
                         initial={{ opacity: 0, y: 50 }}
                         animate={
@@ -119,204 +202,130 @@ export function InfluencerForm({ dict }: { dict: any }) {
                                 </Button>
                             </div>
                         ) : (
-                            <form onSubmit={handleSubmit} className="space-y-4">
-                                <div className="space-y-2">
-                                    <label
-                                        htmlFor="name"
-                                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                    >
-                                        {dict.form.name}
-                                    </label>
-                                    <Input id="name" required />
+                            <form
+                                onSubmit={handleSubmit(onSubmit)}
+                                className="space-y-6"
+                            >
+                                {InfluencerTextFields.map((input, index) => {
+                                    return (
+                                        <InputField
+                                            key={index}
+                                            name={input.name}
+                                            register={register}
+                                            type={input.type}
+                                            label={dict.form[input.name]}
+                                            required={input.required}
+                                            errors={errors}
+                                            className=" bg-zinc-700/50"
+                                        />
+                                    );
+                                })}
+                                <div className=" flex-grow flex justify-between items-center gap-4">
+                                    {/* Gender */}
+                                    <SelectField
+                                        control={control}
+                                        name="gender"
+                                        label={dict.form.gender}
+                                        options={["Male", "Female"]}
+                                        errors={errors}
+                                        className=" bg-zinc-700/50"
+                                    />
+
+                                    {/* Category */}
+                                    <SelectField
+                                        control={control}
+                                        name="category"
+                                        label={dict.form.category}
+                                        options={creatorCategories}
+                                        errors={errors}
+                                        className=" bg-zinc-700/50"
+                                    />
+
+                                    {/* Audience Size */}
+                                    <SelectField
+                                        control={control}
+                                        name="followers"
+                                        label={dict.form.audience}
+                                        options={audienceSizes}
+                                        errors={errors}
+                                        className=" bg-zinc-700/50"
+                                    />
                                 </div>
                                 <div className="space-y-2">
-                                    <label
-                                        htmlFor="email"
-                                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                    >
-                                        {dict.form.email}
-                                    </label>
-                                    <Input id="email" type="email" required />
-                                </div>
-                                <div className="space-y-2">
-                                    <label
-                                        htmlFor="phone"
-                                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                    >
-                                        {dict.form.phone}
-                                    </label>
-                                    <Input id="phone" type="tel" />
-                                </div>
-                                <div className="space-y-2">
-                                    <label
-                                        htmlFor="dateOfBirth"
-                                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                    >
-                                        Date Of Birth
-                                    </label>
-                                    <Input id="dateOfBirth" type="date" />
-                                </div>
-                                <div className="space-y-2">
-                                    <label
-                                        htmlFor="gender"
-                                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                    >
-                                        Gender
-                                    </label>
-                                    <Select>
-                                        <SelectTrigger>
-                                            <SelectValue placeholder="Select a Gender" />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            <SelectItem key={1} value="male">
-                                                Male
-                                            </SelectItem>
-                                            <SelectItem key={2} value="female">
-                                                Female
-                                            </SelectItem>
-                                        </SelectContent>
-                                    </Select>
-                                </div>
-                                <div className="space-y-2 mt-16">
-                                    <h3 className="text-sm font-medium leading-none pb-2 border-b">
-                                        {dict.form.social.title}
-                                    </h3>
-                                    <SocialMediaInputs />
-                                    {/* <div className="grid gap-4 sm:grid-cols-2">
-                                        <div className="space-y-2">
-                                            <label
-                                                htmlFor="instagram"
-                                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                            >
-                                                Instagram
-                                            </label>
-                                            <Input id="instagram" />
-                                        </div>
-                                        <div className="space-y-2">
-                                            <label
-                                                htmlFor="tiktok"
-                                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                            >
-                                                Tiktok
-                                            </label>
-                                            <Input id="tiktok" />
-                                        </div>
-                                        <div className="space-y-2">
-                                            <label
-                                                htmlFor="youtube"
-                                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                            >
-                                                Youtube
-                                            </label>
-                                            <Input id="youtube" />
-                                        </div>
-                                        <div className="space-y-2">
-                                            <label
-                                                htmlFor="facebook"
-                                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                            >
-                                               Facebook
-                                            </label>
-                                            <Input id="facebook" />
-                                        </div>
-                                        <div className="space-y-2">
-                                            <label
-                                                htmlFor="twitter"
-                                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                            >
-                                                Twitter
-                                            </label>
-                                            <Input id="tiwtter" />
-                                        </div>
-                                        <div className="space-y-2">
-                                            <label
-                                                htmlFor="twitter"
-                                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                            >
-                                                Other
-                                            </label>
-                                            <Input id="other" />
-                                        </div>
-                                    </div> */}
-                                </div>
-                                <div className="space-y-2">
-                                    <label
-                                        htmlFor="category"
-                                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                    >
-                                        {dict.form.category}
-                                    </label>
-                                    <Select>
-                                        <SelectTrigger>
-                                            <SelectValue placeholder="Select a category" />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            {categories.map(
-                                                (category, index) => (
-                                                    <SelectItem
-                                                        key={index}
-                                                        value={category
-                                                            .toLowerCase()
-                                                            .replace(
-                                                                /\s+/g,
-                                                                "-"
-                                                            )}
-                                                    >
-                                                        {category}
-                                                    </SelectItem>
-                                                )
-                                            )}
-                                        </SelectContent>
-                                    </Select>
-                                </div>
-                                <div className="space-y-2">
-                                    <label
-                                        htmlFor="audience"
-                                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                    >
-                                        {dict.form.audience}
-                                    </label>
-                                    <Select>
-                                        <SelectTrigger>
-                                            <SelectValue placeholder="Select audience size" />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            {audienceSizes.map(
-                                                (size, index) => (
-                                                    <SelectItem
-                                                        key={index}
-                                                        value={size
-                                                            .toLowerCase()
-                                                            .replace(
-                                                                /\s+/g,
-                                                                "-"
-                                                            )}
-                                                    >
-                                                        {size}
-                                                    </SelectItem>
-                                                )
-                                            )}
-                                        </SelectContent>
-                                    </Select>
-                                </div>
-                                <div className="space-y-2">
-                                    <label
-                                        htmlFor="bio"
-                                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                    >
+                                    <label className="block text-sm font-medium text-zinc-300">
                                         {dict.form.bio}
                                     </label>
                                     <Textarea
-                                        id="bio"
-                                        className="min-h-[100px] bg-background/50"
+                                        {...register("bio")}
+                                        placeholder="Bio"
+                                        className=" border-gray-400 bg-zinc-700/50"
                                     />
                                 </div>
+
+                                {/* Social platforms checkboxes */}
+                                <div>
+                                    <p className="text-sm font-semibold text-zinc-300">
+                                        Social Platforms
+                                    </p>
+                                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mt-2">
+                                        {platforms.map((platform) => (
+                                            <label
+                                                key={platform}
+                                                className="flex items-center gap-2 cursor-pointer"
+                                            >
+                                                <input
+                                                    type="checkbox"
+                                                    checked={selectedPlatforms.includes(
+                                                        platform
+                                                    )}
+                                                    onChange={() =>
+                                                        togglePlatform(platform)
+                                                    }
+                                                    className="accent-brand"
+                                                />
+                                                <span>{platform}</span>
+                                            </label>
+                                        ))}
+                                    </div>
+
+                                    {selectedPlatforms.map((platform) => {
+                                        return (
+                                            <div
+                                                key={platform}
+                                                className="grid sm:grid-cols-2 gap-2 mt-2"
+                                            >
+                                                <Input
+                                                    placeholder={`${platform} Link`}
+                                                    onChange={(e) =>
+                                                        handleSocialLinksChange(
+                                                            platform,
+                                                            "url",
+                                                            e.target.value
+                                                        )
+                                                    }
+                                                />
+                                                <Input
+                                                    type="text"
+                                                    placeholder="Followers"
+                                                    onChange={(e) =>
+                                                        handleSocialLinksChange(
+                                                            platform,
+                                                            "followers",
+                                                            e.target.value
+                                                        )
+                                                    }
+                                                />
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+
                                 <Button
                                     type="submit"
                                     className="w-full bg-brand hover:bg-brand-dark"
-                                    disabled={isSubmitting}
+                                    disabled={isPending}
                                 >
-                                    {isSubmitting
+                                    {isPending
                                         ? "Submitting..."
                                         : dict.form.submit}
                                 </Button>

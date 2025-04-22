@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Creator, CreatorCard } from "@/components/creator-card";
 import { useInfiniteScroll } from "@/hooks/use-infinite-scroll";
-import { allCreators, creatorCategories } from "@/data/creators";
+import { allCreators } from "@/data/creators";
 import { Button } from "@/components/ui/button";
 import { Search, Filter } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -16,6 +16,7 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { a } from "framer-motion/dist/types.d-B50aGbjN";
+import { creatorCategories } from "./form/form-field";
 
 interface CreatorsGridProps {
     dict: {
@@ -85,7 +86,7 @@ export function CreatorsGrid({ dict, creators }: CreatorsGridProps) {
                         <h1 className=" bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to bg-slate-50 text-3xl font-bold tracking-tighter md:text-4xl lg:text-5xl">
                             {dict.title}
                         </h1>
-                        <p className="mx-auto max-w-[700px] text-muted dark:text-slate-100 md:text-xl">
+                        <p className="mx-auto max-w-[700px] dark:text-slate-100 md:text-xl">
                             {dict.subtitle}
                         </p>
                     </motion.div>

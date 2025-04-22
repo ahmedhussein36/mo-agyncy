@@ -3,6 +3,7 @@ import Image from "next/image";
 import React, { useRef } from "react";
 import { platformIcons } from "../platform-icons";
 import { delay, motion, useInView } from "framer-motion";
+import { formatNumberShort } from "@/lib/number-formate";
 const TopCreatorCard = ({
     topCreators,
     index,
@@ -12,13 +13,14 @@ const TopCreatorCard = ({
 }) => {
     const ref = useRef<HTMLDivElement>(null);
     const isInView = useInView(ref, { once: true, amount: 0 });
+    const formatedFollowers = formatNumberShort;
 
     return (
         <motion.div
             ref={ref}
             initial={{ y: 30, opacity: 0 }}
             animate={isInView ? { y: 0, opacity: 1 } : { y: 30, opacity: 1 }}
-            transition={{delay: 0.12 * index} }
+            transition={{ delay: 0.12 * index }}
             exit={{ opacity: 0, y: 30, transition: { duration: 0.5 } }}
             className="w-full h-full group hover:cursor-pointer border-2 rounded-xl duration-500 transition-all ease-linear
             border-transparent hover:border-indigo-500/70 hover:shadow-2xl hover:shadow-indigo-400/40 "
@@ -45,7 +47,11 @@ const TopCreatorCard = ({
                                         <span>
                                             {platformIcons(social.platform)}
                                         </span>
-                                        <span>{social.followers}</span>
+                                        <span>
+                                            {formatedFollowers(
+                                                social.followers
+                                            )}
+                                        </span>
                                     </div>
                                 )
                             )}

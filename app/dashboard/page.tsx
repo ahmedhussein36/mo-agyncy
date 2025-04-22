@@ -1,12 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { requireAuth } from "@/lib/auth";
-import {
-    Users,
-    CalendarDays,
-    ChartBar,
-    AlarmClock,
-    Award,
-} from "lucide-react";
+import { Users, CalendarDays, ChartBar, AlarmClock, Award } from "lucide-react";
 import { InfluencerChart } from "@/components/dashboard/influencer-chart";
 import { RecentBrands } from "@/components/dashboard/recent-brands";
 import { RecentInfluencers } from "@/components/dashboard/recent-influencer";
@@ -120,6 +114,7 @@ export default async function DashboardPage() {
                 </Card>
                 <TopInfluencerCard
                     influencer={{
+                        id: topInfluencer.id,
                         name: topInfluencer.name,
                         username: topInfluencer.email,
                         image:

@@ -1,8 +1,5 @@
 import { prisma } from "@/lib/prisma";
 import InfluencerProfile from "@/components/dashboard/influencer-profile";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { Pencil, PenIcon, PinIcon } from "lucide-react";
 
 export default async function EditBrandPage({
     params,

@@ -10,6 +10,35 @@ import { AboutWhatWeDo } from "@/components/about-what-we-do";
 import { ContactCTA } from "@/components/contact-cta";
 import { getCurrentUser } from "@/lib/auth";
 
+export async function generateMetadata({
+    params,
+}: {
+    params: { lang: Locale };
+}) {
+    const { lang } = params;
+    const metaTitle = "MoeAgency | About our agency";
+    const metaDescription =
+        "Discover MoeAgency's journey, culture, and expertise in influencer marketing. Learn how we create tailored solutions to elevate your brand's presence. ";
+    const altLangs = ["en", "ar"].filter((l) => l !== lang);
+
+    return {
+        title: metaTitle,
+        description: metaDescription,
+        openGraph: {
+            title: metaTitle,
+            description: metaDescription,
+            locale: lang,
+            type: "website",
+        },
+        alternates: {
+            languages: altLangs.reduce((acc, l) => {
+                acc[l] = `/${l}`;
+                return acc;
+            }, {} as Record<string, string>),
+        },
+    };
+}
+
 export default async function AboutPage({
     params,
 }: {
