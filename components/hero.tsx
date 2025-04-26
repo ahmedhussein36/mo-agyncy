@@ -148,9 +148,9 @@ export function Hero({
                             <Image
                                 src={
                                     dict.image ||
-                                    "https://res.cloudinary.com/ds04j5ge0/image/upload/v1743953134/uploads/Layer-2_likkmd.png"
+                                    "/uploads/our-services-image.png"
                                 }
-                                width={500}
+                                width={600}
                                 height={500}
                                 alt="Hero illustration"
                                 className="object-contain max-w-full h-auto"

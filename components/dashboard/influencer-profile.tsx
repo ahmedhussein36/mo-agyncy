@@ -43,7 +43,7 @@ export default function InfluencerProfile({ influencer }: { influencer: any }) {
                                 "/uploads/1744823198469-images.png"
                             }
                             alt={influencer.name || "Creator Name"}
-                            className="w-full h-full rounded-xl object-cover mb-4 border-2 border-gray-700"
+                            className="w-full max-h-[400px] h-full rounded-xl object-cover mb-4 border-2 border-gray-700"
                         />
                         <div className=" ">
                             <ImageUploader id={influencer.id} />

@@ -152,7 +152,7 @@ export function ContactForm({
                             </div>
                         </EditableSection>
 
-                        <EditableSection
+                        {/* <EditableSection
                             jsonPath="contact.info.phone"
                             id="contact.info.phone"
                             isAdmin={isAdmin}
@@ -184,7 +184,7 @@ export function ContactForm({
                                     </p>
                                 </div>
                             </div>
-                        </EditableSection>
+                        </EditableSection> */}
 
                         <EditableSection
                             jsonPath="contact.info.location"

@@ -58,6 +58,7 @@ export function CreatorCard({
     index: number;
 }) {
     const formatedFollowers = formatNumberShort;
+    const hidden = true;
 
     return (
         <motion.div
@@ -73,7 +74,7 @@ export function CreatorCard({
             className=" h-[520px] bg-gradient-to-bl from-brand/10 to-transparent rounded-lg shadow-lg overflow-hidden "
         >
             <div className="service-card-container border h-full group  ">
-                <div className=" service-card relative service-card h-full overflow-hidden rounded-lg border-none transition-all duration-500 hover:shadow-lg flex flex-col">
+                <div className=" service-card relative service-card h-full overflow-hidden rounded-2xl border-none transition-all duration-500 hover:shadow-lg flex flex-col">
                     {/* Full card background image */}
                     <div className=" w-full h-full ">
                         <Image
@@ -88,9 +89,18 @@ export function CreatorCard({
                     <div className="flex-grow"></div>
 
                     {/* Creator details with backdrop blur - positioned at the bottom */}
-                    <div className="relative z-10 p-4 backdrop-blur-sm bg-black/80 flex flex-col">
-                        <div className=" relative w-full flex items-center justify-start gap-2 mb-3">
-                            <CountryFlag country={creator.country || ""} style={{width : "20px", height : "16px" }} />
+                    <div
+                        className={`${
+                            hidden
+                                ? "hidden"
+                                : " relative z-10 p-4 backdrop-blur-sm bg-black/70 flex flex-col"
+                        }`}
+                    >
+                        <div className=" relative w-full flex items-center justify-start gap-2">
+                            <CountryFlag
+                                country={creator.country || ""}
+                                style={{ width: "20px", height: "16px" }}
+                            />
                             <h3 className="text-lg font-bold truncate">
                                 {creator.name}
                             </h3>
@@ -104,7 +114,7 @@ export function CreatorCard({
                             {creator.bio}
                         </p>
 
-                        <div className="grid grid-cols-4 gap-2 mb-4 text-sm">
+                        <div className="grid grid-cols-4 gap-2 text-sm">
                             {creator.socialLinks?.map((link) => (
                                 <Link
                                     key={link.platform}

@@ -40,7 +40,7 @@ interface SelectFieldProps {
 export const InputField = ({
     name,
     register,
-    type,
+    type = "text",
     label,
     className,
     required,
@@ -50,23 +50,29 @@ export const InputField = ({
     return (
         <div className="space-y-2">
             <label className="block text-sm font-medium text-zinc-300">
-                {label}
+                {required ? `${label} *` : label}
             </label>
             <Input
                 type={type}
-                {...register(name)}
+                {...register(name, {
+                    required: required ? `${label} is required` : false,
+                })}
                 required={required}
                 placeholder={placeholder}
                 className={cn(
                     `${
-                        errors?.[name] ? "border-red-500" : "border-gray-500"
-                    } bg-gray-700/50`,
+                        errors?.[name] ?? false
+                            ? "border-red-500"
+                            : "border-gray-500"
+                    } bg-gray-700/50 border `,
                     className
                 )}
             />
 
             {errors?.[name] && (
-                <p className="text-red-500 text-sm">This field is required</p>
+                <p className="text-sm text-red-600 mt-1">
+                    {String(errors[name]?.message) || "This field is required*"}
+                </p>
             )}
         </div>
     );
@@ -85,7 +91,7 @@ export const SelectField = ({
     return (
         <div className="space-y-2 w-full">
             <label className="block text-sm font-medium text-zinc-300">
-                {label}
+                {required ? `${label} *` : label}
             </label>
             <Controller
                 control={control}
@@ -148,13 +154,13 @@ export const InfluencerTextFields = [
         name: "country",
         label: "Country",
         type: "text",
-        required: false,
+        required: true,
     },
     {
         name: "dateOfBirth",
         label: "Birth Date",
         type: "date",
-        required: false,
+        required: true,
     },
 ];
 

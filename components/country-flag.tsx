@@ -8,7 +8,7 @@ export const CountryFlag = ({
     country,
     style,
 }: {
-    style: Record<string, string>;
+    style?: Record<string, string>;
     country: string;
 }) => {
     const [code, setCode] = useState<string>("");

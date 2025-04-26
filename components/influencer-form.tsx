@@ -20,14 +20,17 @@ import { useForm } from "react-hook-form";
 import { createInfluencer } from "@/actions/influencer-actions";
 import { useToast } from "./ui/use-toast";
 
+type SocialLinks = { platform: string; url: string; followers: number };
+
 export function InfluencerForm({ dict }: { dict: any }) {
     const formRef = useRef<HTMLDivElement>(null);
     const isInView = useInView(formRef, { once: true, amount: 0.2 });
     const [isSuccess, setIsSuccess] = useState(false);
     const [selectedPlatforms, setSelectedPlatforms] = useState<string[]>([]);
-    const [socialLinks, setSocialLinks] = useState<
-        { platform: string; url: string; followers: number }[]
-    >([]);
+    const [socialLinks, setSocialLinks] = useState<SocialLinks[]>([]);
+
+    const [isPending, startTransition] = useTransition();
+    const { toast } = useToast();
 
     const {
         register,
@@ -92,9 +95,6 @@ export function InfluencerForm({ dict }: { dict: any }) {
         });
     };
 
-    const [isPending, startTransition] = useTransition();
-    const { toast } = useToast();
-
     const onSubmit = (data: any) => {
         const formData = new FormData();
 
@@ -123,7 +123,6 @@ export function InfluencerForm({ dict }: { dict: any }) {
                         variant: "destructive",
                     });
                     console.log(result.error || "Something went wrong");
-
                 }
             } catch (error) {
                 toast({
@@ -156,7 +155,7 @@ export function InfluencerForm({ dict }: { dict: any }) {
                 </div>
                 <div
                     ref={formRef}
-                    className="mx-auto mt-12 max-w-2xl bg-zinc-800 border-0 rounded-lg"
+                    className="mx-auto mt-12 max-w-2xl border-0 rounded-lg"
                 >
                     <motion.div
                         initial={{ opacity: 0, y: 50 }}
@@ -166,7 +165,7 @@ export function InfluencerForm({ dict }: { dict: any }) {
                                 : { opacity: 0, y: 50 }
                         }
                         transition={{ duration: 0.8 }}
-                        className="rounded-lg border bg-zinc-900/50 p-6 shadow-sm"
+                        className="rounded-lg border bg-zinc-800/50 p-6 shadow-sm"
                     >
                         {isSuccess ? (
                             <div className="flex flex-col items-center justify-center space-y-4 p-8 text-center">
@@ -206,6 +205,11 @@ export function InfluencerForm({ dict }: { dict: any }) {
                                 onSubmit={handleSubmit(onSubmit)}
                                 className="space-y-6"
                             >
+                                {Object.keys(errors).length > 0 && (
+                                    <div className="rounded-xl border border-red-500 text-red-600 bg-red-100 p-2">
+                                        Please fill out all required fields!
+                                    </div>
+                                )}
                                 {InfluencerTextFields.map((input, index) => {
                                     return (
                                         <InputField
@@ -228,6 +232,7 @@ export function InfluencerForm({ dict }: { dict: any }) {
                                         label={dict.form.gender}
                                         options={["Male", "Female"]}
                                         errors={errors}
+                                        required
                                         className=" bg-zinc-700/50"
                                     />
 
@@ -238,6 +243,7 @@ export function InfluencerForm({ dict }: { dict: any }) {
                                         label={dict.form.category}
                                         options={creatorCategories}
                                         errors={errors}
+                                        required={true}
                                         className=" bg-zinc-700/50"
                                     />
 
@@ -248,6 +254,7 @@ export function InfluencerForm({ dict }: { dict: any }) {
                                         label={dict.form.audience}
                                         options={audienceSizes}
                                         errors={errors}
+                                        required
                                         className=" bg-zinc-700/50"
                                     />
                                 </div>

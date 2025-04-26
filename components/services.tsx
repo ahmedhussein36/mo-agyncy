@@ -75,7 +75,7 @@ export function Services({
                         initialData={{
                             title: dict.header.title,
                             subtitle: dict.header.subtitle,
-                            image: dict.header.image,
+                            image: dict?.header?.image || "",
                         }}
                     >
                         <motion.div
@@ -97,7 +97,7 @@ export function Services({
                         </motion.div>
                     </EditableSection>
                     <div className=" grid grid-cols-1 lg:grid-flow-col w-full gap-12 ">
-                        <motion.div
+                        {/* <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={isInView ? { opacity: 1, y: 0 } : {}}
                             whileHover={{ scale: 1.05 }}
@@ -109,14 +109,14 @@ export function Services({
                             <Image
                                 src={
                                     dict.header.image ||
-                                    "/uploads/our-services-image.png"
+                                    "/uploads/bgbb.png"
                                 }
                                 alt="our-services-image"
                                 width={480}
                                 height={100}
                                 className="col-span-1  object-cover h-auto"
                             />
-                        </motion.div>
+                        </motion.div> */}
                         <motion.div
                             variants={container}
                             initial="hidden"

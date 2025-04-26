@@ -73,6 +73,16 @@ model Brand {
   updatedAt     DateTime       @updatedAt
 }
 
+model Home {
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  headr    Header
+  about    String
+  mission  String
+  vision   String
+  value    String
+  services Services
+}
+
 type SocialLink {
   platform String
   url      String
@@ -94,4 +104,21 @@ type SocialMedia {
   platform  String?
   url       String?
   followers Int?
+}
+
+type Header {
+  title    String?
+  subtitle String?
+  cta      String?
+  image    String?
+}
+
+type Services {
+  headr Header
+  items Item[]
+}
+
+type Item {
+  title       String
+  description String
 }

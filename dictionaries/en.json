@@ -26,13 +26,13 @@
       "title": "Connect with Top Influencers",
       "subtitle": "Elevate your brand with our network of influential creators.",
       "cta": "Get Started",
-      "image": "https://res.cloudinary.com/ds04j5ge0/image/upload/v1743953134/uploads/Layer-2_likkmd.png"
+      "image": "/uploads/our-services-image.png"
     },
     "services": {
       "header": {
         "title": "Our Services",
         "subtitle": "Comprehensive solutions for brands and influencers.",
-        "image": "/uploads/our-services-image.png"
+        "image": "/uploads/bgbb.png"
       },
       "items": [
         {
@@ -311,7 +311,7 @@
     "info": {
       "address": {
         "label": "Address",
-        "address": "123 , Al Ma'adi , Cairo , Egypt"
+        "address": "30 N Gould St Ste R City Sheridan U.S."
       },
       "phone": {
         "label": "Phone",
@@ -323,7 +323,7 @@
       },
       "location": {
         "label": "Find us",
-        "location": "maadi , egypt"
+        "location": "30 N Gould St Ste R City Sheridan U.S"
       }
     },
     "form": {
@@ -376,7 +376,8 @@
         "name": "Full Name",
         "email": "Email",
         "phone": "Phone Number",
-        "dateOfBirth": "date Of Birth",
+        "dateOfBirth": "Date Of Birth",
+        "country": "Country",
         "gender": "Gender",
         "social": {
           "title": "Social Media Platforms",

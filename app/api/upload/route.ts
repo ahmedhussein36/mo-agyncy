@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    const filename = `${file.name}-${uuid()}.png`;
+    const filename = `${file.name.replace(".", "_")}-${uuid()}.png`;
     const uploadPath = path.join(process.cwd(), "public/uploads", filename);
 
     await writeFile(uploadPath, buffer);

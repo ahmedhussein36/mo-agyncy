@@ -2,7 +2,7 @@
 import Image from "next/image";
 import React, { useRef } from "react";
 import { platformIcons } from "../platform-icons";
-import { delay, motion, useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { formatNumberShort } from "@/lib/number-formate";
 const TopCreatorCard = ({
     topCreators,
@@ -14,6 +14,8 @@ const TopCreatorCard = ({
     const ref = useRef<HTMLDivElement>(null);
     const isInView = useInView(ref, { once: true, amount: 0 });
     const formatedFollowers = formatNumberShort;
+
+    const isHidden = true;
 
     return (
         <motion.div
@@ -32,8 +34,14 @@ const TopCreatorCard = ({
                     fill
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
-                <div className="absolute h-full inset-0 bg-gradient-to-t from-black/90 to-transparent opacity-1">
-                    <div className="flex flex-col items-center justify-end h-full pb-12 ">
+                <div className=" absolute h-full inset-0 bg-gradient-to-t from-black/90 to-transparent opacity-1">
+                    <div
+                        className={`${
+                            isHidden
+                                ? "hidden"
+                                : " flex flex-col items-center justify-end h-full pb-12 "
+                        }`}
+                    >
                         <div className="text-white text-lg font-bold">
                             {topCreators.name}
                         </div>

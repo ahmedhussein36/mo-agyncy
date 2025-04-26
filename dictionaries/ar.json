@@ -320,7 +320,7 @@
       },
       "email": {
         "label": "البريد الإلكتروني",
-        "email": "info@moeagency.com"
+        "email": "info@moeagency.net"
       },
       "location": {
         "label": "ابحث عنا",
@@ -377,6 +377,8 @@
         "name": "الاسم الكامل",
         "email": "البريد الإلكتروني",
         "phone": "رقم الهاتف",
+        "country": "البلد",
+        "dateOfBirth": "تاريخ الميلاد",
         "social": {
           "title": "منصات التواصل الاجتماعي",
           "instagram": "اسم مستخدم إنستغرام",

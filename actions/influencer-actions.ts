@@ -35,11 +35,6 @@ export async function getInfluencers(
     category?: string,
     country?: string
 ) {
-    const currentUser = await getCurrentUser();
-
-    if (!currentUser) {
-        return { error: "Unauthorized" };
-    }
 
     const skip = (page - 1) * limit;
 
