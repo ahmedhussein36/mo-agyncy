@@ -65,7 +65,7 @@ export default async function Home({
         };
     } | null;
 
-    const about = (await prisma.page.findUnique({
+    const contact = (await prisma.page.findUnique({
         where: { slug: "about" },
     })) as {
         content: {
@@ -76,6 +76,7 @@ export default async function Home({
     const dict = (await getDictionary(lang)) || {};
     const navigation = dict?.navigation || {};
     const hero = pageContent?.content?.hero || {};
+    const about = pageContent?.content?.about || {};
     const services = pageContent?.content?.services || {};
     const stats = pageContent?.content?.stats || {};
     const topCreators = pageContent?.content?.topCreators || {};
@@ -106,7 +107,7 @@ export default async function Home({
             </main>
             <ContactCTA
                 slug="about"
-                dict={about?.content.contact}
+                dict={contact?.content.contact}
                 lang={lang}
                 isAdmin={isAdmin}
             />
