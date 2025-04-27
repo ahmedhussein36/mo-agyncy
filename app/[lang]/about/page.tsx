@@ -9,6 +9,7 @@ import { AboutStory } from "@/components/about-story";
 import { AboutWhatWeDo } from "@/components/about-what-we-do";
 import { ContactCTA } from "@/components/contact-cta";
 import { getCurrentUser } from "@/lib/auth";
+import prisma from "@/lib/prisma";
 
 export async function generateMetadata({
     params,
@@ -42,26 +43,58 @@ export async function generateMetadata({
 export default async function AboutPage({
     params,
 }: {
-    params: Promise<{ lang: Locale }>;
+    params: { lang: Locale };
 }) {
-    const { lang } = await params;
+    const slug = "about";
+    const { lang } = params;
+    const pageContent = (await prisma.page.findUnique({
+        where: { slug },
+    })) as {
+        content: {
+            whoWeAre: any;
+            culture: any;
+            story: any;
+            whatWeDo: any;
+            contact: any;
+        };
+    } | null;
+
     const dict = (await getDictionary(lang)) || {};
     const isAdmin = await getCurrentUser();
     const navigation = dict.navigation || {};
     const footer = dict.footer || {};
-    const about = dict.about || {};
-
     return (
         <div className="flex min-h-screen flex-col">
             <Header dict={navigation} />
             <main className="flex-1">
-                <AboutHero dict={about} isAdmin={isAdmin} />
-                <AboutWhoWeAre dict={about.whoWeAre} isAdmin={isAdmin} />
-                <AboutCulture dict={about.culture} isAdmin={isAdmin} />
-                <AboutStory dict={about.story} isAdmin={isAdmin} />
-                <AboutWhatWeDo dict={about.whatWeDo} isAdmin={isAdmin} />
+                <AboutHero
+                    slug={slug}
+                    dict={pageContent?.content}
+                    isAdmin={isAdmin}
+                />
+                <AboutWhoWeAre
+                    slug={slug}
+                    dict={pageContent?.content.whoWeAre}
+                    isAdmin={isAdmin}
+                />
+                <AboutCulture
+                    slug={slug}
+                    dict={pageContent?.content?.culture}
+                    isAdmin={isAdmin}
+                />
+                <AboutStory
+                    slug={slug}
+                    dict={pageContent?.content?.story}
+                    isAdmin={isAdmin}
+                />
+                <AboutWhatWeDo
+                    slug={slug}
+                    dict={pageContent?.content?.whatWeDo}
+                    isAdmin={isAdmin}
+                />
                 <ContactCTA
-                    dict={about.contact}
+                    slug={slug}
+                    dict={pageContent?.content?.contact}
                     lang={lang}
                     isAdmin={isAdmin}
                 />

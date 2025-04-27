@@ -52,7 +52,8 @@ export function Services({
             <div className="container px-4 md:px-6 grid grid-cols-1">
                 <div className="flex flex-col items-center justify-center space-y-4 text-center">
                     <EditableSection
-                        jsonPath="home.services.header"
+                        slug="home"
+                        jsonPath="services.header"
                         id="home.services.header"
                         isAdmin={isAdmin}
                         fields={[
@@ -125,7 +126,8 @@ export function Services({
                         >
                             {dict.items?.map((service: any, index: number) => (
                                 <EditableSection
-                                    jsonPath={`home.services.items.${index}`}
+                                    slug="home"
+                                    jsonPath={`services.items.${index}`}
                                     id={`home.services.items.${index}`}
                                     key={index}
                                     isAdmin={isAdmin}

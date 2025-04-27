@@ -9,9 +9,11 @@ import { EditableSection } from "@/components/admin/editable-section";
 export function AboutWhoWeAre({
     dict,
     isAdmin = false,
+    slug,
 }: {
     dict: any;
     isAdmin?: boolean;
+    slug: string;
 }) {
     const ref = useRef<HTMLDivElement>(null);
     const isInView = useInView(ref, { once: true, amount: 0.2 });
@@ -31,7 +33,8 @@ export function AboutWhoWeAre({
                         className="space-y-4"
                     >
                         <EditableSection
-                            jsonPath="about.whoWeAre"
+                            slug={slug}
+                            jsonPath="whoWeAre"
                             id="about-who-we-are"
                             isAdmin={isAdmin}
                             fields={[

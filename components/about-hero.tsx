@@ -6,8 +6,10 @@ import { EditableSection } from "@/components/admin/editable-section";
 export function AboutHero({
     dict,
     isAdmin = false,
+    slug,
 }: {
     dict: any;
+    slug: string;
     isAdmin?: boolean;
 }) {
     return (
@@ -20,7 +22,8 @@ export function AboutHero({
             <div className="container relative z-10 px-4 md:px-6">
                 <div className="flex flex-col items-center justify-center text-center space-y-4 max-w-3xl mx-auto">
                     <EditableSection
-                        jsonPath="about.header"
+                        slug={slug}
+                        jsonPath="header"
                         id="about.header"
                         isAdmin={isAdmin}
                         fields={[

@@ -71,7 +71,8 @@ export function ServiceDetails({
             <div className="container px-4 md:px-6">
                 <div className="flex flex-col items-center justify-center gap-16 space-y-4 text-center">
                     <EditableSection
-                        jsonPath="services.header"
+                        slug="services"
+                        jsonPath="header"
                         id="service.details.header"
                         isAdmin={isAdmin}
                         fields={[
@@ -153,7 +154,8 @@ export function ServiceDetails({
                                     {/* المحتوى */}
                                     <div className="w-full lg:w-1/2 space-y-4 flex flex-col gap-4">
                                         <EditableSection
-                                            jsonPath={`.services.items.${index}`}
+                                            slug="services"
+                                            jsonPath={`items.${index}`}
                                             id={`service-detail-${index}`}
                                             isAdmin={isAdmin}
                                             fields={[
@@ -178,7 +180,7 @@ export function ServiceDetails({
                                                 description:
                                                     service.description,
                                                 features: service.features.map(
-                                                    (f: {value: string}) => ({
+                                                    (f: { value: string }) => ({
                                                         value: f.value,
                                                     })
                                                 ),

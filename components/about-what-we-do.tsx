@@ -9,9 +9,11 @@ import { EditableSection } from "./admin/editable-section";
 export function AboutWhatWeDo({
     dict,
     isAdmin = false,
+    slug,
 }: {
     dict: any;
     isAdmin?: boolean;
+    slug: string;
 }) {
     const ref = useRef<HTMLDivElement>(null);
     const isInView = useInView(ref, { once: true, amount: 0.2 });
@@ -42,7 +44,8 @@ export function AboutWhatWeDo({
         <section ref={ref} className="py-20 bg-black/20">
             <div className="container px-4 md:px-6">
                 <EditableSection
-                    jsonPath="about.whatWeDo.header"
+                    slug={slug}
+                    jsonPath="whatWeDo.header"
                     id="about.whatWeDo.header"
                     isAdmin={isAdmin}
                     fields={[
@@ -91,9 +94,10 @@ export function AboutWhatWeDo({
                 >
                     {dict.services.map((service: any, index: number) => (
                         <EditableSection
+                            slug={slug}
                             key={index}
-                            jsonPath={`about.whatWeDo.services.${index}`}
-                            id={`about.whatWeDo.services.${index}`}
+                            jsonPath={`whatWeDo.services.${index}`}
+                            id={`whatWeDo.services.${index}`}
                             isAdmin={isAdmin}
                             fields={[
                                 {

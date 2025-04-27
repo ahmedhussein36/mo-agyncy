@@ -39,7 +39,8 @@ export function ContactForm({
             <div className="container px-4 md:px-6">
                 <div className="flex flex-col items-center justify-center space-y-4 text-center">
                     <EditableSection
-                        id="contact.header"
+                        slug="contact"
+                        id="header"
                         jsonPath="contact.header"
                         isAdmin={isAdmin}
                         fields={[
@@ -85,7 +86,8 @@ export function ContactForm({
                         className="space-y-6"
                     >
                         <EditableSection
-                            jsonPath="contact.info.address"
+                            slug="contact"
+                            jsonPath="info.address"
                             id="contact.info.address"
                             isAdmin={isAdmin}
                             fields={[
@@ -119,7 +121,8 @@ export function ContactForm({
                         </EditableSection>
 
                         <EditableSection
-                            jsonPath="contact.info.email"
+                            slug="contact"
+                            jsonPath="info.email"
                             id="contact.info.email"
                             isAdmin={isAdmin}
                             fields={[
@@ -187,7 +190,8 @@ export function ContactForm({
                         </EditableSection> */}
 
                         <EditableSection
-                            jsonPath="contact.info.location"
+                            slug="contact"
+                            jsonPath="info.location"
                             id="contact.info.location"
                             isAdmin={isAdmin}
                             fields={[

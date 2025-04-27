@@ -22,15 +22,15 @@ export function About({
             left-20 top-24
             "
             >
-                <h2
-                    className="tracking-tighter font-bold text-3xl md:text-4xl lg:text-[8rem]">
+                <h2 className="tracking-tighter font-bold text-3xl md:text-4xl lg:text-[8rem]">
                     About Us
                 </h2>
             </div>
             <div className="container px-4 md:px-6">
                 <div className="grid gap-0 md:grid-cols-2">
                     <EditableSection
-                        jsonPath="home.about.aboutUs"
+                        slug="home"
+                        jsonPath="about.aboutUs"
                         id="home.about,aboutUs"
                         isAdmin={isAdmin}
                         fields={[
@@ -70,6 +70,7 @@ export function About({
                     </EditableSection>
 
                     <EditableSection
+                        slug="home"
                         jsonPath="about.mission"
                         id="about.mission"
                         isAdmin={isAdmin}
@@ -110,6 +111,7 @@ export function About({
                     </EditableSection>
 
                     <EditableSection
+                        slug="home"
                         jsonPath="about.vision"
                         id="about.vision"
                         isAdmin={isAdmin}
@@ -148,7 +150,9 @@ export function About({
                             </p>
                         </motion.div>
                     </EditableSection>
+                    
                     <EditableSection
+                        slug="home"
                         jsonPath="about.value"
                         id="about.value"
                         isAdmin={isAdmin}

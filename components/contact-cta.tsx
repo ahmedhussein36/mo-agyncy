@@ -12,10 +12,12 @@ export function ContactCTA({
     dict,
     lang,
     isAdmin = false,
+    slug,
 }: {
     dict: any;
     lang: Locale;
     isAdmin?: boolean;
+    slug: string;
 }) {
     const ref = useRef<HTMLDivElement>(null);
     const isInView = useInView(ref, { once: true, amount: 0.2 });
@@ -27,7 +29,8 @@ export function ContactCTA({
             <div className="container px-4 md:px-6">
                 <div className="max-w-3xl mx-auto text-center">
                     <EditableSection
-                        id="about.contact"
+                        slug={slug}
+                        id="contact"
                         jsonPath="about.contact"
                         isAdmin={isAdmin}
                         fields={[

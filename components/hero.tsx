@@ -61,7 +61,8 @@ export function Hero({
                 <div className="container relative z-10 px-4 md:px-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-8">
                         <EditableSection
-                            jsonPath="home.hero"
+                            slug="home"
+                            jsonPath="hero"
                             id="home.hero"
                             isAdmin={isAdmin}
                             fields={[

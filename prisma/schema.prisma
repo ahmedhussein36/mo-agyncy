@@ -10,6 +10,31 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  OWNER
+  ADMIN
+  EDITOR
+}
+
+type SocialLink {
+  platform String
+  url      String
+}
+
+enum ApprovalStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+type SocialMedia {
+  platform  String?
+  url       String?
+  followers Int?
+}
+
+////Models
+
 model User {
   id             String    @id @default(auto()) @map("_id") @db.ObjectId
   name           String
@@ -73,52 +98,12 @@ model Brand {
   updatedAt     DateTime       @updatedAt
 }
 
-model Home {
-  id       String   @id @default(auto()) @map("_id") @db.ObjectId
-  headr    Header
-  about    String
-  mission  String
-  vision   String
-  value    String
-  services Services
-}
+/// Content
 
-type SocialLink {
-  platform String
-  url      String
-}
-
-enum Role {
-  OWNER
-  ADMIN
-  EDITOR
-}
-
-enum ApprovalStatus {
-  PENDING
-  APPROVED
-  REJECTED
-}
-
-type SocialMedia {
-  platform  String?
-  url       String?
-  followers Int?
-}
-
-type Header {
-  title    String?
-  subtitle String?
-  cta      String?
-  image    String?
-}
-
-type Services {
-  headr Header
-  items Item[]
-}
-
-type Item {
-  title       String
-  description String
+model Page {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  slug      String   @unique
+  content   Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

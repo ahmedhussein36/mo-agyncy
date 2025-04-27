@@ -426,5 +426,10 @@
     "social": {
       "follow": "Follow us"
     }
+  },
+  "whoWeAre": {
+    "title": "WHO WE ARE",
+    "content": "We are a leading influencer marketing agency connecting brands with influential creators. Our team of experts works tirelessly to create authentic connections that drive real results.\nOur team of experts works tirelessly to create authentic connections between brands and  influencers, driving meaningful engagement and Measurable results for our clients.\nWith years of experience in the industry, we understand the nuances of influencer marketing  and how to leverage it effectively for brands of  all sizes.",
+    "image": "https://res.cloudinary.com/ds04j5ge0/image/upload/v1744451580/uploads/Strategic-Planning-Blog-Image-1-2_ktyerm.jpg?q=auto&f=auto"
   }
 }

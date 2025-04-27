@@ -48,7 +48,8 @@ export function FeatureCards({
             <div className="container px-4 md:px-6">
                 <div className="flex flex-col items-center justify-center space-y-4 text-center mb-16">
                     <EditableSection
-                        jsonPath="home.featureCards.header"
+                        slug="home"
+                        jsonPath="featureCards.header"
                         id="home.featureCards.header"
                         isAdmin={isAdmin}
                         fields={[
@@ -130,7 +131,8 @@ export function FeatureCards({
 
                                 <div className="w-full md:w-1/2 space-y-4">
                                     <EditableSection
-                                        jsonPath={`home.featureCards.items.${index}`}
+                                        slug="home"
+                                        jsonPath={`featureCards.items.${index}`}
                                         id={`feature-card-content-${index}`}
                                         isAdmin={isAdmin}
                                         fields={[

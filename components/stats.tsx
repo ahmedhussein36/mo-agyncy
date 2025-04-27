@@ -82,7 +82,8 @@ export function Stats({
         >
             <div className="container px-4 md:px-6">
                 <EditableSection
-                    jsonPath="home.stats.title"
+                    slug="home"
+                    jsonPath="stats.title"
                     id="home.state.title"
                     isAdmin={isAdmin}
                     fields={[{ name: "title", type: "text", label: "Title" }]}
@@ -119,7 +120,8 @@ export function Stats({
                                 className="flex flex-col items-center justify-center space-y-2 border-r border-gray-800 last:border-r-0 px-4"
                             >
                                 <EditableSection
-                                    jsonPath={`home.stats.items.${index}`}
+                                    slug="home"
+                                    jsonPath={`stats.items.${index}`}
                                     id={`stats.item-${index}`}
                                     isAdmin={isAdmin}
                                     fields={[

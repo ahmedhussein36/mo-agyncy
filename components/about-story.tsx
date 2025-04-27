@@ -9,9 +9,11 @@ import { EditableSection } from "./admin/editable-section";
 export function AboutStory({
     dict,
     isAdmin = false,
+    slug,
 }: {
     dict: any;
     isAdmin: boolean;
+    slug: string;
 }) {
     const ref = useRef<HTMLDivElement>(null);
     const isInView = useInView(ref, { once: true, amount: 0.2 });
@@ -58,7 +60,8 @@ export function AboutStory({
                         className="space-y-4 order-1 md:order-2"
                     >
                         <EditableSection
-                            jsonPath="about.story"
+                            slug={slug}
+                            jsonPath="story"
                             id="about.story"
                             isAdmin={isAdmin}
                             fields={[
@@ -80,7 +83,7 @@ export function AboutStory({
                                 image: dict.image,
                             }}
                         >
-                            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">
+                            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl mb-6">
                                 {dict.title}
                             </h2>
                             <div className="space-y-4">

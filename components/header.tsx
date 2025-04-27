@@ -124,13 +124,6 @@ export function Header({ dict = {} }: { dict: any }) {
                             </Link>
                         </Button>
                     </div>
-                    <Link
-                        href={newPathname}
-                        className="text-sm font-medium transition-colors hover:text-brand"
-                    >
-                        {dict.language ||
-                            (lang === "en" ? "العربية" : "English")}
-                    </Link>
                 </nav>
                 <Sheet>
                     <SheetTrigger asChild>
@@ -190,13 +183,6 @@ export function Header({ dict = {} }: { dict: any }) {
                                 className="text-lg font-medium transition-colors hover:text-brand"
                             >
                                 {dict.register?.brand || "Partner with Us"}
-                            </Link>
-                            <Link
-                                href={newPathname}
-                                className="text-lg font-medium transition-colors hover:text-brand"
-                            >
-                                {dict.language ||
-                                    (lang === "en" ? "العربية" : "English")}
                             </Link>
                         </div>
                     </SheetContent>

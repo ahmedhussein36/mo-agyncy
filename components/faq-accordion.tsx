@@ -24,7 +24,8 @@ export function FaqAccordion({
         <section id="faqs" className="py-16 bg-black/20 scroll-mt-10">
             <div className="container px-4 md:px-6">
                 <EditableSection
-                    jsonPath="faq.title"
+                    slug="faq"
+                    jsonPath="title"
                     id="faq.title"
                     isAdmin={isAdmin}
                     fields={[{ name: "title", type: "text", label: "Title" }]}
@@ -57,7 +58,8 @@ export function FaqAccordion({
                                 className="border border-gray-800 rounded-lg overflow-hidden bg-black/30 backdrop-blur-sm"
                             >
                                 <EditableSection
-                                    jsonPath={`faq.items.${index}`}
+                                    slug="faq"
+                                    jsonPath={`items.${index}`}
                                     id={`faq.items.${index}`}
                                     isAdmin={isAdmin}
                                     fields={[

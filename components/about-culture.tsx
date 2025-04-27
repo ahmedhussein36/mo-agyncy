@@ -3,16 +3,16 @@
 import { useRef } from "react";
 import { useInView } from "framer-motion";
 import { motion } from "framer-motion";
-import { Edit } from "lucide-react";
 import { EditableSection } from "./admin/editable-section";
-import { sub } from "date-fns";
 
 export function AboutCulture({
     dict,
     isAdmin = false,
+    slug,
 }: {
     dict: any;
     isAdmin: boolean;
+    slug: string;
 }) {
     const ref = useRef<HTMLDivElement>(null);
     const isInView = useInView(ref, { once: true, amount: 0.2 });
@@ -35,7 +35,8 @@ export function AboutCulture({
     return (
         <section ref={ref} className="py-20 bg-black/20">
             <EditableSection
-                jsonPath="about.culture"
+                slug={slug}
+                jsonPath="culture"
                 id="about.culture"
                 fields={[
                     { name: "title", type: "text", label: "Title" },

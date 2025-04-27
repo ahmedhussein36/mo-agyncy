@@ -6,29 +6,42 @@ import { ContactForm } from "@/components/contact-form";
 import { FaqAccordion } from "@/components/faq-accordion";
 import { ContactCTA } from "@/components/contact-cta";
 import { getCurrentUser } from "@/lib/auth";
+import prisma from "@/lib/prisma";
 
 export default async function ContactPage({
     params,
 }: {
     params: Promise<{ lang: Locale }>;
 }) {
+    const slug = "contact";
     const { lang } = await params;
+
+    const pageContent = await prisma.page.findUnique({ where: { slug } });
+    const faqs = await prisma.page.findUnique({ where: { slug: "faq" } });
+    const about = await prisma.page.findUnique({ where: { slug: "about" } })as{
+        content: {
+            contact: any
+        }
+    } | null
+
     const dict = (await getDictionary(lang)) || {};
     const isAdmin = await getCurrentUser();
     const navigation = dict.navigation || {};
-    const contact = dict.contact || {};
     const footer = dict.footer || {};
-    const about = dict.about || {};
-    const faq = dict.faq || {};
 
     return (
         <div className="flex min-h-screen flex-col">
             <Header dict={navigation} />
             <main className="flex-1">
-                <ContactForm dict={contact} isAdmin={isAdmin} />
-                <FaqAccordion dict={faq as any} isAdmin={isAdmin} />
+                <ContactForm dict={pageContent?.content} isAdmin={isAdmin} />
+                <FaqAccordion dict={faqs?.content as any} isAdmin={isAdmin} />
             </main>
-            <ContactCTA dict={about.contact} lang={lang} isAdmin={isAdmin} />
+            <ContactCTA
+                slug="about"
+                dict={about?.content?.contact}
+                lang={lang}
+                isAdmin={isAdmin}
+            />
             <Footer dict={footer} />
         </div>
     );

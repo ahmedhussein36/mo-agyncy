@@ -24,6 +24,7 @@ export interface EditableField {
 interface EditableSectionProps {
     id: string;
     jsonPath: string;
+    slug: string;
     isAdmin?: boolean;
     initialData: Record<string, any>;
     fields: EditableField[];
@@ -33,6 +34,7 @@ interface EditableSectionProps {
 
 export const EditableSection = ({
     id,
+    slug,
     jsonPath,
     isAdmin = false,
     initialData,
@@ -64,17 +66,20 @@ export const EditableSection = ({
     const handleSave = async () => {
         setIsEditing(true);
         try {
-            await saveSectionData(jsonPath, data, locale);
+            const updatedData = { ...initialData, ...data };
+
+           {/* await saveSectionData(jsonPath, updatedData, locale); */}
+            await saveData(slug, jsonPath, updatedData);
             router.refresh();
             toast({
                 title: "Success",
-                description: "item has been update",
+                description: "item has been updated",
                 variant: "default",
             });
         } catch (error) {
             toast({
                 title: "Error",
-                description: "Faild to Update item",
+                description: "Failed to update item",
                 variant: "destructive",
             });
             console.log(error);
@@ -253,30 +258,61 @@ export const EditableSection = ({
     );
 };
 
-export const saveSectionData = async (
+// export const saveSectionData = async (
+//     jsonPath: string,
+//     formData: any,
+//     locale: "en" | "ar"
+// ) => {
+//     try {
+//         const response = await fetch(`/api/content/${locale}`, {
+//             method: "POST",
+//             headers: {
+//                 "Content-Type": "application/json",
+//             },
+//             body: JSON.stringify({
+//                 jsonPath,
+//                 data: formData,
+//             }),
+//         });
+
+//         const result = await response.json();
+//         if (result.success) {
+//             console.log("Data saved successfully!");
+//         } else {
+//             console.error("Error saving data:", result.error);
+//         }
+//     } catch (error) {
+//         console.error("Failed to save section data:", error);
+//     }
+// };
+
+export const saveData = async (
+    slug: string,
     jsonPath: string,
-    formData: any,
-    locale: "en" | "ar"
+    formData: any
 ) => {
     try {
-        const response = await fetch(`/api/content/${locale}`, {
-            method: "POST",
+        const response = await fetch(`/api/content/${slug}`, {
+            method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
+                slug,
                 jsonPath,
                 data: formData,
             }),
         });
 
         const result = await response.json();
-        if (result.success) {
-            console.log("Data saved successfully!");
-        } else {
-            console.error("Error saving data:", result.error);
+        if (!response.ok) {
+            throw new Error(result.error || "Unknown error occurred");
         }
+
+        console.log("Data updated successfully:", result);
+        return result;
     } catch (error) {
-        console.error("Failed to save section data:", error);
+        console.error("Failed to update section data:", error);
+        throw error;
     }
 };
