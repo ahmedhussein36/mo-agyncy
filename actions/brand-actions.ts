@@ -97,12 +97,12 @@ export async function getBrands(
 export async function createBrand(formData: FormData) {
     const currentUser = await getCurrentUser();
 
-    if (
-        !currentUser ||
-        (currentUser.role !== "OWNER" && currentUser.role !== "ADMIN")
-    ) {
-        return { error: "Unauthorized" };
-    }
+    // if (
+    //     !currentUser ||
+    //     (currentUser.role !== "OWNER" && currentUser.role !== "ADMIN")
+    // ) {
+    //     return { error: "Unauthorized" };
+    // }
 
     // Sanitize description
     const description = formData.get("description") as string;

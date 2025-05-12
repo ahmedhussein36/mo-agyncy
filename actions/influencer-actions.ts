@@ -81,12 +81,12 @@ export async function getInfluencers(
 export async function createInfluencer(formData: FormData) {
     const currentUser = await getCurrentUser();
 
-    if (
-        !currentUser ||
-        (currentUser.role !== "OWNER" && currentUser.role !== "ADMIN")
-    ) {
-        return { error: "Unauthorized" };
-    }
+    // if (
+    //     !currentUser ||
+    //     (currentUser.role !== "OWNER" && currentUser.role !== "ADMIN")
+    // ) {
+    //     return { error: "Unauthorized" };
+    // }
 
     // Parse social links from form data
     const socialLinksJson = formData.get("socialLinks") as string;

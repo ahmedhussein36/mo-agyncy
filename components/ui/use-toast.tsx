@@ -4,7 +4,7 @@ import type React from "react";
 
 import { useState, createContext, useContext, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Check, CheckCircleIcon, X, XCircle } from "lucide-react";
+import { CheckCircleIcon, X, XCircle } from "lucide-react";
 
 interface Toast {
     id: string;
