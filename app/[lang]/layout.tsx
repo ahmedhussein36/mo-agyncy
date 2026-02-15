@@ -1,13 +1,7 @@
 import type React from "react";
 import type { Locale } from "@/i18n.config";
-import { ThemeProvider } from "@/components/theme-provider";
-import { LanguageProvider } from "@/components/language-provider";
-import { Analytics } from "@/components/analytics";
-import { PageTransition } from "@/components/page-transition";
-import { ToastProvider } from "@/components/ui/use-toast";
 import { i18n } from "@/i18n.config";
 import "@/app/globals.css";
-import LoadingOverlay from "@/components/loader/OverlayLoading";
 import { Providers } from "@/providers/provider";
 export async function generateStaticParams() {
     return i18n.locales.map((locale) => ({ lang: locale }));
